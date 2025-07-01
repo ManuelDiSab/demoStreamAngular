@@ -1,0 +1,218 @@
+<div id="alert"></div>
+<form class="select" [formGroup]="form_select">
+    <!-- Form contenente la ngSelect per ricercare il film e la tabella contenente un massio di 10 film-->
+    <h2 class="titolo_form">Gestione film</h2>
+
+    <ng-select class="custom mx-2" formControlName="select_film" [(ngModel)]="filmSelezionato"
+        (search)="cercaFilm(input.searchTerm)" #input><!-- Ngselect dove effettuo la ricerca del film -->
+        <ng-option *ngFor="let item of arr_film" [value]="item">{{item.titolo}}</ng-option>
+    </ng-select>
+    <div class="btn-container"><!-- contenitore dei button-->
+        <button class="button_gest back" (click)="filmSelezionato = null" *ngIf="filmSelezionato!== null"><i
+                class="bi bi-arrow-90deg-left"></i> INDIETRO</button>
+        <button class="add button_gest" (click)="open(form);setForm('add');reset()"><i
+                class="bi bi-plus-square-fill me-1"></i>AGGIUNGI</button><!-- Button per aprire la modal cn form di aggiunta-->
+        <button class="elimina button_gest" (click)="open(eliminazione)" *ngIf="filmSelezionato != null"><i
+                class="bi bi-trash3-fill me-1"></i>ELIMINA
+        </button><!-- Button che compare solo con il film selezionato e apre la modal per confermare l'elimimnazione-->
+        <button class="modifica button_gest me-1" (click)="open(form);setForm('mod')" *ngIf="filmSelezionato != null"
+            (click)="inserimnetoFilmDaModificare()"><i class="bi bi-brush-fill"></i>MODIFICA</button><!-- Button che apre la modal con il form di modifica 
+            Il button compare solo se il film selezionato p diverso da null-->
+    </div>
+
+    <table class="table table-striped" *ngIf="filmSelezionato === null"><!--Table con alcuni film-->
+        <thead>
+            <tr>
+                <th scope="col" class="titolo">Titolo</th>
+                <th scope="col" class="genere">Genere</th>
+                <th scope="col" class="anno">Anno</th>
+                <th scope="col" class="locandina">Locandina</th>
+                <th></th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let film of arr_film_tab">
+                <td class="titolo">{{film.titolo}}</td>
+                <td scope="row" class="genere">{{film.genere}}</td>
+                <td class="anno">{{film.anno}}</td>
+                <td class="locandina"> <img [src]="film.path" class="me-2" style="width: 100px" /> </td>
+                <td>
+                    <button class="elimina button_gest" (click)="open(eliminazione);setFilm(film)"><i
+                            class="bi bi-trash3-fill me-1"></i>ELIMINA
+                    </button><!--Button per aprire la modal di eliminazione-->
+                </td>
+                <td>
+                    <button class="modifica button_gest me-1" (click)="open(form);setFilm(film);setForm('mod');
+                    inserimnetoFilmDaModificare();"><i
+                            class="bi bi-brush-fill"></i>MODIFICA</button><!--Button per aprire la modal di modifica-->
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-striped"><!--Table con alcuni film-->
+        <tbody id="tabella_selezionato" *ngIf="filmSelezionato">
+            <!--  Fare la parte in tyescript-->
+            <tr>
+                <th>TITOLO</th>
+                <td>{{filmSelezionato.titolo }}</td>
+            </tr>
+            <tr>
+                <th>TRAMA</th>
+                <td>{{filmSelezionato.trama }}</td>
+            </tr>
+            <tr>
+                <th>LOCANDINA</th>
+                <td> <img [src]="filmSelezionato.path" class="me-2 img_loc" /> </td>    
+            </tr>
+            <tr>
+                <th>REGISTA</th>
+                <td>{{filmSelezionato.regista }}</td>
+            </tr>
+            <tr>
+                <th>VOTO</th>
+                <td>{{filmSelezionato.voto }}</td>
+            </tr>
+            <tr>
+                <th>DURATA</th>
+                <td>{{filmSelezionato.durata }}</td>
+            </tr>
+            <tr>
+                <th>GENERE</th>
+                <td>{{filmSelezionato.genere }}</td>
+            </tr>
+            <tr>
+                <th>GENERI SECONDARI</th>
+                <td>{{filmSelezionato.generi_secondari }}</td>
+            </tr>
+        </tbody>
+    </table>
+</form>
+
+<ng-template #form let-modal><!-- ### FORM PER LA MODIFICA DEL FILM SELEZIONATO -->
+    <div class="modal-header">
+        <h5 class="modal-title" id="modal-title" *ngIf="n_form===1">Nuovo film</h5>
+        <!-- se la variabile n_form è uguale ad uno allora setto il titolo del form in "Nuovo film"-->
+        <h5 class="modal-title" id="modal-title" *ngIf="n_form===2">Form di modifica di "{{filmSelezionato?.titolo}}"
+        </h5><!-- altrimenti setto il titolo del form in "Form di modifica di" e passo il titolo del film-->
+    </div>
+
+    <div class="modal-body ">
+        <form [formGroup]="form_film" class="form_gestione gestione_film " enctype="multipart/form-data">
+
+            <div class="row g-2 mb-3 p-3 mx-1"><!-- TITOLO E REGISTA-->
+
+                <label class="form-label" for="titolo" [class.is-invalid]="form_film.get('titolo')?.invalid &&
+                    (form_film.get('titolo')?.dirty || form_film.get('titolo')?.touched)">Titolo</label>
+                <input type="text" class="form-control" formControlName="titolo" id="titolo" [class.is-invalid]="form_film.get('titolo')?.invalid &&
+                    (form_film.get('titolo')?.dirty || form_film.get('titolo')?.touched)">
+                <label class="form-label" for="regista" [class.is-invalid]="form_film.get('regista')?.invalid &&
+                    (form_film.get('regista')?.dirty || form_film.get('regista')?.touched)">Regista</label>
+                <input type="text" class="form-control" formControlName="regista" id="regista" [class.is-invalid]="form_film.get('regista')?.invalid &&
+                    (form_film.get('regista')?.dirty || form_film.get('regista')?.touched)">
+            </div>
+
+            <div class="row g-2 mb-3 p-3 mx-1"><!-- GENERE PRINCIPALE E GENERI SECONDARI?-->
+                <label class="form-label" for="genere1" [class.is-invalid]="form_film.get('genere')?.invalid &&
+                    (form_film.get('genere')?.dirty || form_film.get('genere')?.touched)">Genere</label>
+                <ng-select formControlName="genere" id="genere1" class="custom select-gen" [class.is-invalid]="form_film.get('genere')?.invalid &&
+                    (form_film.get('genere')?.dirty || form_film.get('genere')?.touched)">
+                    <ng-option *ngFor="let genere of arr_generi" [value]="genere.idGenere">{{genere.nome}}</ng-option>
+                </ng-select>
+                <label class="form-label" for="generi2" [class.is-invalid]="form_film.get('generi2')?.invalid &&
+                    (form_film.get('generi2')?.dirty || form_film.get('generi2')?.touched)">Altri generi</label>
+                <input type="text" class="form-control" formControlName="generi2" id="generi2" [class.is-invalid]="form_film.get('generi2')?.invalid &&
+                    (form_film.get('generi2')?.dirty || form_film.get('generi2')?.touched)">
+            </div>
+
+
+            <div class="row g-2 mb-3 p-3 mx-1"><!-- ANNO, DURATA E VOTO-->
+                <div class="col col-md-4"><!-- #####  ANNO  ########-->
+                    <label class="form-label" for="anno" [class.is-invalid]="form_film.get('anno')?.invalid &&
+                    (form_film.get('anno')?.dirty || form_film.get('anno')?.touched)">Anno</label>
+                    <input class="form-control" type="text" formControlName="anno" id="anno" [class.is-invalid]="form_film.get('anno')?.invalid &&
+                    (form_film.get('anno')?.dirty || form_film.get('anno')?.touched)">
+                </div>
+                <div class="col col-md-4"><!-- #####  DURATA  ########-->
+                    <label class="form-label" for="durata" [class.is-invalid]="form_film.get('durata')?.invalid &&
+                    (form_film.get('durata')?.dirty || form_film.get('durata')?.touched)">Durata</label>
+                    <input class="form-control" type="text" formControlName="durata" id="durata" [class.is-invalid]="form_film.get('durata')?.invalid &&
+                    (form_film.get('durata')?.dirty || form_film.get('durata')?.touched)">
+                </div>
+                <div class="col col-md-4"><!-- #####  VOTO  ########-->
+                    <label class="form-label" for="voto" [class.is-invalid]="form_film.get('voto')?.invalid &&
+                    (form_film.get('voto')?.dirty || form_film.get('voto')?.touched)">Voto</label>
+                    <input class="form-control" type="text" formControlName="voto" id="voto" [class.is-invalid]="form_film.get('voto')?.invalid &&
+                    (form_film.get('voto')?.dirty || form_film.get('voto')?.touched)">
+                </div>
+            </div>
+
+            <div class="row g-2 mb-3 p-3 mx-1 "><!--####  TEXT AREA PER LA TRAMA-->
+                <div class="col"><!-- #####  TRAMA  ########-->
+                    <label class="form-label" for="trama" [class.is-invalid]="form_film.get('trama')?.invalid &&
+                    (form_film.get('trama')?.dirty || form_film.get('trama')?.touched)">Incipit</label>
+                    <textarea class="form-control" type="text" formControlName="trama" id="trama" rows="3"
+                        role="textbox" [class.is-invalid]="form_film.get('trama')?.invalid &&
+                    (form_film.get('trama')?.dirty || form_film.get('trama')?.touched)">
+                    </textarea>
+                </div>
+            </div>
+
+            <div class="row g-2 mb-3 p-3 mx-1"><!--#### PATH IMG  ##########-->
+                <div class="col"><!-- #####  PATH  ########-->
+                    <label class="form-label" for="img" [class.is-invalid]="form_film.get('img')?.invalid &&
+                    (form_film.get('img')?.dirty || form_film.get('img')?.touched)">Locandina</label>
+                    <input class="form-control" type="file" formControlName="img" id="locandina" [class.is-invalid]="form_film.get('img')?.invalid &&
+                    (form_film.get('img')?.dirty || form_film.get('img')?.touched)" (change)="postImg($event)">
+                    <!-- In caso di modifica l'input file per la locandina è disabilitato-->
+                </div>
+            </div>
+            <div class="row g-2 mb-3 p-3 mx-1"><!--####  VIDEO  ##########-->
+                <div class="col"><!-- #####  VIDEO  ########-->
+                    <label class="form-label" for="video" [class.is-invalid]="form_film.get('video')?.invalid &&
+                    (form_film.get('video')?.dirty || form_film.get('video')?.touched)">Video</label>
+                    <input class="form-control" type="file" formControlName="video" accept="video" id="locandina"
+                        [class.is-invalid]="form_film.get('video')?.invalid &&
+                    (form_film.get('video')?.dirty || form_film.get('video')?.touched)" (change)="postVideo($event)">
+                </div>
+            </div>
+            <div class="btn-container">
+                <button class="annulla conferma_butt"
+                    (click)="modal.close('Save click');"><!-- BUtton per annullare ed uscire dalla modal -->
+                    ANNULLA
+                </button>
+                <button class="add conferma_butt" *ngIf="n_form === 1" (click)="AggiungiOnClick();modal.close()"
+                    [disabled]="form_film.invalid"
+                    [ngClass]="form_film.invalid ? 'disabled-add' : ''"><!-- Button per confermare la l'aggiunta di un nuovo film-->
+                    AGGIUNGI
+                </button>
+                <button class="modifica conferma_butt" type="submit"
+                    (click)="modificaOnClick();modal.close('Save click');"
+                    *ngIf="n_form === 2"><!-- Button per confermare la modifica del film-->
+                    MODIFICA
+                </button>
+            </div>
+
+
+        </form>
+    </div>
+</ng-template>
+
+<ng-template #eliminazione let-modal><!-- #### FORM PER LA CANCELLAZIONE DEL FILM   ###############-->
+    <div class="modal-header"><!--  Modal per la conferma dell'eliminazione del film selezionato -->
+        <h5 class="modal-title" id="modal-title">Eliminazione "{{filmSelezionato?.titolo}}"</h5>
+    </div>
+    <div class="modal-body eliminazione">
+        <p class="conferma">Sei sicuro di voler eliminare il film "{{filmSelezionato?.titolo}}"?</p>
+        <div class="btn-container">
+            <button class="annulla conferma_butt"
+                (click)="modal.close('annulla click')"><!-- Button per annullare ed uscire dalla modal -->
+                ANNULLA
+            </button>
+            <button class="elimina conferma_butt"
+                (click)="EliminaOnClick();modal.close('Save click');"><!-- Button per confremare l'eliminazione del film selezionato-->
+                ELIMINA <i class="bi bi-trash3-fill"></i>
+            </button>
+        </div>
+    </div>
+</ng-template>

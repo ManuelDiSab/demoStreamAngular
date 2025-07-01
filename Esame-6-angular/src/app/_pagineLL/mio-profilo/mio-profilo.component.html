@@ -1,0 +1,422 @@
+<div id="alert" class="p-3"></div>
+<section>
+    <h2 class="text-center text-white mt-5">Il mio account</h2>
+    <div class="container-dati"><!-- ####  Pannello per la password-->
+        <div class="container-header">
+            <h5>Password</h5>
+            <button class="btn btn-outline-light" (click)="open(info);setNform(3)"><i class="bi bi-pencil-square"></i>
+                modifica</button>
+        </div>
+        <hr>
+        <div class="row">
+            <div class="col">
+                <Span>Password</Span>
+                <p>**********</p>
+            </div>
+        </div>
+    </div>
+    <div class="container-dati"><!-- ####  Pannello con nome e cognome-->
+        <div class="container-header">
+            <h5>Nome e cognome</h5>
+            <button class="btn btn-outline-light" (click)="open(info);setNform(4);inserimentoDati(4)"><i
+                    class="bi bi-pencil-square"></i> modifica</button>
+        </div>
+        <hr>
+        <div class="row">
+            <div class="col">
+                <Span>Nome</Span>
+                <p>{{user?.nome}}</p>
+            </div>
+            <div class="col">
+                <span>Cognome</span>
+                <p>{{user?.cognome}}</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="container-dati"><!-- ####  Pannello dei recapiti #####-->
+        <div class="container-header">
+            <h5>Recapiti</h5>
+            <button class="btn btn-outline-light" (click)="open(info);setNform(5);inserimentoDati(5)"><i
+                    class="bi bi-pencil-square"></i> modifica</button>
+        </div>
+        <hr>
+        <div class="row">
+            <div class="col">
+                <Span>Telefono</Span>
+                <p>{{recap}}</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="container-dati"><!-- ####  Pannello con informazioni anagrafiche-->
+        <div class="container-header">
+            <h5>Info personali</h5>
+            <button class="btn btn-outline-light" (click)="open(info);setNform(1);inserimentoDati(1)"><i
+                    class="bi bi-pencil-square"></i> modifica</button>
+        </div>
+        <hr>
+        <div class="row">
+            <div class="col">
+                <Span>Data di nascita</Span>
+                <p>{{anag?.dataNascita}}</p>
+            </div>
+            <div class="col">
+                <Span>Comune di nascita</Span>
+                <p>{{anag?.comuneNascita}}</p>
+            </div>
+        </div>
+        <hr>
+        <div class="row">
+
+            <div class="col">
+                <Span>Codice Fiscale</Span>
+                <p>{{anag?.cod_fis}}</p>
+            </div>
+        </div>
+
+    </div>
+    <div class="container-dati"><!-- ####  Pannello con le informazioni riguardante gli indirizzi  -->
+        <div class="container-header">
+            <h5>Indirizzo</h5>
+            <button class="btn btn-outline-light" (click)="open(info);setNform(2);inserimentoDati(2)"><i
+                    class="bi bi-pencil-square"></i> modifica</button>
+        </div>
+        <hr>
+        <div class="row">
+            <div class="col">
+                <Span>Comune e provincia</Span>
+                <p>{{indirizzi?.comune}} {{indirizzi?.provincia}}</p>
+            </div>
+
+            <div class="col">
+                <Span>Indirizzo </Span>
+                <p>{{indirizzi?.indirizzo}} {{indirizzi?.civico}}</p>
+            </div>
+        </div>
+        <hr>
+        <div class="row">
+            <div class="col">
+                <span>Cap</span>
+                <p>{{indirizzi?.cap}}</p>
+            </div>
+            <div class="col">
+                <span>Nazione</span>
+                <p>{{indirizzi?.nazione}}</p>
+            </div>
+        </div>
+
+        <hr>
+
+        <div class="row">
+            <div class="col">
+                <Span>Tipologia indirizzo</Span>
+                <p>{{indirizzi?.tipo}}</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="container-dati danger-zone"><!-- ####  Pannello con le informazioni riguardante gli indirizzi  -->
+        <div class="container-header header-dz">
+            <h5>Azioni sull'account</h5>
+            <button class="btn btn-outline-danger text-danger" (click)="open(elimina);setNform(5);inserimentoDati(5)"><i
+                    class="bi bi-trash-fill text-danger"></i>
+                elimina</button>
+        </div>
+        <hr>
+        <div class="row">
+            <div class="col dz-inner">
+                <p>Elimina l'account</p>
+                <p class="text-danger ">Una volta cancellato l'account non potrai più tornare indietro</p>
+            </div>
+        </div>
+    </div>
+
+</section>
+
+<ng-template #info let-modal><!-- Modal con  form per le modifiche-->
+    <div class="modal-header">
+        <span class="text-white">Modifica</span>
+    </div>
+    <div class="modal-body">
+        <form class="" [formGroup]="form_info" *ngIf="n_form === 1" (submit)="modificaInfo()">
+            <!-- FORM DI MODIFICA DELLE INFORMAZIONI ANAGRAFICHE-->
+
+            <div class="row g-2 mb-3 p-3 mx-1">
+                <label for="data" class="form-label" [class.is-invalid]="form_info.get('data')?.invalid &&
+                    (form_info.get('data')?.dirty || form_info.get('data')?.touched)" #dataNascita>Data di
+                    nascita</label>
+                <div class="input-group">
+                    <input class="form-control text-white" placeholder="yyyy-mm-dd" name="data" id="data" ngbDatepicker
+                        [minDate]="{ year: 1990, month: 1, day: 1}" #d="ngbDatepicker" ngb formControlName="data" #data
+                        [class.is-invalid]="form_info.get('data')?.invalid &&
+                            (form_info.get('data')?.dirty || form_info.get('data')?.touched)" />
+                    <button class="btn  bi bi-calendar3 text-white border border-rounded" (click)="d.toggle()"
+                        type="button" id="dateP" [class.is-invalid]="form_info.get('data')?.invalid &&
+                            (form_info.get('data')?.dirty || form_info.get('data')?.touched)" #comune></button>
+                </div>
+            </div>
+
+            <div class="row g-2 mb-3 p-3 mx-1">
+                <div class="col"><!-- #####  Comune di nascita  ########-->
+                    <label for="comuneNascita" class="form-label"
+                        [class.is-invalid]="form_ind.get('comuneNascita')?.invalid &&
+                            (form_ind.get('comuneNascita')?.dirty || form_ind.get('comuneNascita')?.touched)">comuneNascita</label>
+                    <!-- <input type="text" class="form-control" id="comuneNascita" formControlName="comuneNascita"> -->
+                    <ng-select class="custom" formControlName="comuneNascita" (search)="cercaComune($event.term)"
+                        [class.is-invalid]="form_ind.get('comuneNascita')?.invalid &&
+                            (form_ind.get('comuneNascita')?.dirty || form_ind.get('comuneNascita')?.touched)"
+                        (change)="setProvincia()">
+                        <ng-option *ngFor="let comuneNascita of arr_comuni"
+                            [value]="comuneNascita">{{comuneNascita.nome}}</ng-option>
+                    </ng-select>
+                </div>
+            </div>
+
+
+            <div class="row g-2 mb-3 p-3 mx-1">
+                <label for="codFis" class="form-label text-white" id="lb_codFis" [class.is-invalid]="form_info.get('codFis')?.invalid &&
+                            (form_info.get('codFis')?.dirty || form_info.get('codFis')?.touched)">
+                    Codice fiscale<span>*</span></label>
+                <div class="input-group">
+                    <input type="text" class="form-control text-white" id="codFis" aria-describedby="codFis"
+                        formControlName="codFis" [class.is-invalid]="form_info.get('codFis')?.invalid &&    
+                            (form_info.get('codFis')?.dirty || form_info.get('codFis')?.touched)">
+                </div>
+                <span
+                    *ngIf="form_info.get('codFis')?.hasError('controlCodFiscale') && (form_info.get('codFis')?.touched || form_info.get('codFis')?.dirty)"
+                    class="is-invalid">{{( form_info.controls['codFis'].getError('controlCodFiscale')| json )}}
+                </span>
+            </div>
+
+            <div class="btn-container">
+                <button class="annulla conferma_butt" (click)="modal.close('Save click');">
+                    ANNULLA
+                </button>
+                <button class="modifica conferma_butt" type="submit" (click)="modal.close()"
+                    [disabled]="!form_info.valid">
+                    MODIFICA
+                </button>
+            </div>
+        </form>
+
+        <form class="" [formGroup]="form_ind" *ngIf="n_form === 2" (submit)="modificaIndirizzo()">
+            <!-- FORM PER LA MODIFICA DEGLI INDIRIZZI-->
+            <div class="row g-2 mb-3 p-3 mx-1"><!--#### PATH IMG  ##########-->
+                <div class="col"><!-- #####  PATH  ########-->
+                    <label for="comune" class="form-label" [class.is-invalid]="form_ind.get('comune')?.invalid &&
+                            (form_ind.get('comune')?.dirty || form_ind.get('comune')?.touched)">Comune</label>
+                    <!-- <input type="text" class="form-control" id="comune" formControlName="comune"> -->
+                    <ng-select class="custom" formControlName="comune" (search)="cercaComune($event.term)"
+                        [class.is-invalid]="form_ind.get('comune')?.invalid &&
+                            (form_ind.get('comune')?.dirty || form_ind.get('comune')?.touched)"
+                        (change)="setProvincia()">
+                        <ng-option *ngFor="let comune of arr_comuni" [value]="comune">{{comune.nome}}</ng-option>
+                    </ng-select>
+                </div>
+                <div class="col-2"><!-- #####  PATH  ########-->
+                    <label for="input" class="form-label" [class.is-invalid]="form_ind.get('provincia')?.invalid &&
+                            (form_ind.get('provincia')?.dirty || form_ind.get('provincia')?.touched)">Provincia</label>
+                    <input type="text" class="form-control" id="input" formControlName="provincia" [class.is-invalid]="form_ind.get('provincia')?.invalid &&
+                            (form_ind.get('provincia')?.dirty || form_ind.get('provincia')?.touched)">
+                </div>
+            </div>
+            <div class="row g-2 mb-3 p-3 mx-1"><!--#### INDIRIZZO E CIVICO  ##########-->
+                <div class="col"><!-- #####  INDIRIZZO  ########-->
+                    <label for="indirizzo" class="form-label" [class.is-invalid]="form_ind.get('indirizzo')?.invalid &&
+                            (form_ind.get('indirizzo')?.dirty || form_ind.get('indirizzo')?.touched)">Indirizzo</label>
+                    <input type="text" class="form-control" id="indirizzo" formControlName="indirizzo"
+                        [class.is-invalid]="form_ind.get('indirizzo')?.invalid &&
+                            (form_ind.get('indirizzo')?.dirty || form_ind.get('indirizzo')?.touched)">
+                </div>
+                <div class="col-2"><!-- #####  CIVICO  ########-->
+                    <label for="civico" class="form-label" [class.is-invalid]="form_ind.get('civico')?.invalid &&
+                            (form_ind.get('civico')?.dirty || form_ind.get('civico')?.touched)">Civico</label>
+                    <input type="text" class="form-control" id="civico" formControlName="civico" [class.is-invalid]="form_ind.get('civico')?.invalid &&
+                            (form_ind.get('civico')?.dirty || form_ind.get('civico')?.touched)">
+                </div>
+            </div>
+            <div class="row g-2 mb-3 p-3 mx-1"><!--#### CAP  ##########-->
+                <label for="cap" class="form-label" [class.is-invalid]="form_ind.get('cap')?.invalid &&
+                            (form_ind.get('cap')?.dirty || form_ind.get('cap')?.touched)">Cap</label>
+                <!-- <input type="text" class="form-control" id="cap" formControlName="cap" [class.is-invalid]="form_ind.get('cap')?.invalid &&
+                            (form_ind.get('cap')?.dirty || form_ind.get('cap')?.touched)"> -->
+                <ng-select class="custom" formControlName="cap" [class.is-invalid]="form_ind.get('cap')?.invalid &&
+                            (form_ind.get('cap')?.dirty || form_ind.get('cap')?.touched)">
+                    <ng-option id="multicap" [value]="cap" *ngFor="let cap of multicap">{{cap}}</ng-option>
+                </ng-select>
+            </div>
+            <div class="row g-2 mb-3 p-3 mx-1"><!--#### NAZIONE  ##########-->
+                <label for="nazione" class="form-label">Nazione</label>
+                <ng-select class="custom" formControlName="nazione" (search)="cercaNazioni($event.term)"
+                    [class.is-invalid]="form_ind.get('nazione')?.invalid &&
+                            (form_ind.get('nazione')?.dirty || form_ind.get('nazione')?.touched)">
+                    <ng-option *ngFor="let nazione of arr_nazioni" [value]="nazione"
+                        [class.is-invalid]="form_ind.get('nazione')?.invalid &&
+                            (form_ind.get('nazione')?.dirty || form_ind.get('nazione')?.touched)">{{nazione.nome}}</ng-option>
+                </ng-select>
+            </div>
+
+            <div class="row g-2 mb-3 p-3 mx-1"><!--#### TIPOLOGIA INDIRIZZO  ##########-->
+
+                <label for="tipologia" class="form-label text-white" id="lb_tipologia" [class.is-invalid]="form_ind.get('tipologia')?.hasError('required') && (form_ind.get('tipologia')?.dirty
+                         || form_ind.get('tipologia')?.touched)">Tipologia
+                    indirizzo<span>*</span></label>
+                <select class="form-control form-select text-white" id="tipologia" formControlName="tipologia"
+                    [class.is-invalid]="form_ind.get('tipologia')?.hasError('required') && (form_ind.get('tipologia')?.dirty)">
+                    <option [value]="1" selected>Residenza</option>
+                    <option [value]="2">Ufficio</option>
+                </select>
+            </div>
+
+            <div class="btn-container">
+                <button class="annulla conferma_butt" (click)="modal.close('Save click');">
+                    ANNULLA
+                </button>
+                <button class="modifica conferma_butt" type="submit" (click)="modal.close()"
+                    [disabled]="form_ind.invalid">
+                    MODIFICA
+                </button>
+            </div>
+
+        </form>
+
+        <form class="" [formGroup]="form_password" *ngIf="n_form === 3" (submit)="modificaPassword()">
+            <!-- FORM PER LA MODIFICA DELLA PASSWORD-->
+            <div class="row g-2 mb-3 p-3 mx-1">
+                <label for="input" class="form-label" [class.is-invalid]="form_password.get('password')?.invalid &&
+                            (form_password.get('password')?.dirty || form_password.get('password')?.touched)">Password
+                    attuale</label>
+                <input type="password" class="form-control" id="password" formControlName="password" [class.is-invalid]="form_password.get('password')?.invalid &&
+                            (form_password.get('password')?.dirty || form_password.get('password')?.touched)">
+            </div>
+
+            <div class="row g-2 mb-3 p-3 mx-1">
+                <label for="input" class="form-label"
+                    [class.is-invalid]="form_password.get('new_password')?.invalid &&
+                            (form_password.get('new_password')?.dirty || form_password.get('new_password')?.touched)">Nuova password</label>
+                <input type="password" class="form-control" id="new_password" formControlName="new_password"
+                    [class.is-invalid]="form_password.get('new_password')?.invalid &&
+                            (form_password.get('new_password')?.dirty || form_password.get('new_password')?.touched)">
+
+                <div class="text-center"><!--  Contenitore dei messaggi di validazione (email)-->
+                    <small *ngIf="form_password.get('new_password')?.untouched" class="text-white" id="small">
+                        La password deve contenere una lettera maiuscola, una minuscola, un carattere speciale,
+                        un numero ed avere una lunghezza di minimo 8 caratteri</small>
+                    <small class="is-invalid"
+                        *ngIf="form_password.get('new_password')?.hasError('required') && (form_password.get('new_password')?.dirty || form_password.get('new_password')?.touched)">
+                        Il campo "password" è obbligatorio</small>
+                    <small class="is-invalid"
+                        *ngIf="form_password.get('new_password')?.hasError('maxlength') && (form_password.get('new_password')?.dirty || form_password.get('new_password')?.touched)">
+                        Il campo "password" deve avere massimo 5 caratteri</small>
+                </div>
+                <div class="text-center">
+                    <span class="is-invalid"
+                        *ngIf="form_password.get('new_password')?.hasError('controlloPassword') && (form_password.get('new_password')?.dirty || form_password.get('new_password_confirmation')?.touched)">
+                        {{( form_password.controls['new_password'].getError('controlloPassword')| json )}} </span>
+                </div>
+            </div>
+
+
+            <div class="row g-2 mb-3 p-3 mx-1">
+                <label for="input" class="form-label"
+                    [class.is-invalid]="form_password.get('new_password_confirmation')?.invalid &&
+                            (form_password.get('new_password_confirmation')?.dirty || form_password.get('new_password_confirmation')?.touched)">Conferma
+                    nuova password</label>
+                <input type="password" class="form-control" id="new_password_confirmation"
+                    formControlName="new_password_confirmation"
+                    [class.is-invalid]="form_password.get('new_password_confirmation')?.invalid &&
+                            (form_password.get('new_password_confirmation')?.dirty || form_password.get('new_password_confirmation')?.touched)">
+
+                <div class="text-center">
+                    <span class="is-invalid"
+                        *ngIf="form_password.controls['new_password_confirmation'].hasError('passwordMismatch') && 
+                            (form_password.get('new_password_confirmation')?.dirty || form_password.get('new_password_confirmation')?.touched)">
+                        Le due password devono combaciare esattamente!</span>
+                </div>
+            </div>
+
+
+            <div class="btn-container">
+                <button class="annulla conferma_butt" (click)="modal.close('Save click');">
+                    ANNULLA
+                </button>
+                <button class="modifica conferma_butt" type="submit" (click)="modal.close('Save click');"
+                    [disabled]="form_password.invalid">
+                    MODIFICA
+                </button>
+            </div>
+
+        </form>
+
+        <form class="" [formGroup]="form_nome" *ngIf="n_form === 4" (submit)="modificaNominativo()">
+            <!-- FORM PER LA MODIFICA DI NOME E COGNOME-->
+
+            <div class="row g-2 mb-3 p-3 mx-1">
+                <label for="nome" class="form-label" [class.is-invalid]="form_nome.get('nome')?.invalid &&
+                    (form_nome.get('nome')?.dirty || form_nome.get('nome')?.touched)">Nome</label>
+                <input type="text" class="form-control" id="nome" formControlName="nome" [class.is-invalid]="form_nome.get('nome')?.invalid &&
+                    (form_nome.get('nome')?.dirty || form_nome.get('nome')?.touched)" #nome>
+            </div>
+
+            <div class="row g-2 mb-3 p-3 mx-1">
+                <label for="cognome" class="form-label" [class.is-invalid]="form_nome.get('cognome')?.invalid &&
+                    (form_nome.get('cognome')?.dirty || form_nome.get('cognome')?.touched)">Cognome</label>
+                <input type="text" class="form-control" id="cognome" formControlName="cognome" [class.is-invalid]="form_nome.get('cognome')?.invalid &&
+                    (form_nome.get('cognome')?.dirty || form_nome.get('cognome')?.touched)" #cognome>
+            </div>
+
+            <div class="btn-container">
+                <button class="annulla conferma_butt" (click)="modal.close('Save click');">
+                    ANNULLA
+                </button>
+                <button class="modifica conferma_butt" type="submit" (click)="modal.close('Save click');"
+                    [disabled]="form_nome.invalid">
+                    MODIFICA
+                </button>
+            </div>
+
+        </form>
+
+        <form class="" [formGroup]="form_recap" *ngIf="n_form === 5" (submit)="modificaRecapito()">
+            <!-- FORM PER- LA MODIFICA DEI RECAPITI -->
+
+            <div class="row g-2 mb-3 p-3 mx-1">
+                <label for="telefono" class="form-label" [class.is-invalid]="form_recap.get('telefono')?.invalid &&
+                    (form_recap.get('telefono')?.dirty || form_recap.get('telefono')?.touched)">Telefono</label>
+                <input type="text" class="form-control" id="telefono" formControlName="telefono" [class.is-invalid]="form_recap.get('telefono')?.invalid &&
+                    (form_recap.get('telefono')?.dirty || form_recap.get('telefono')?.touched)">
+            </div>
+
+            <div class="btn-container">
+                <button class="annulla conferma_butt" (click)="modal.close('Save click');">
+                    ANNULLA
+                </button>
+                <button class="modifica conferma_butt" type="submit" (click)="modal.close('Save click');"
+                    [disabled]="form_recap.invalid">
+                    MODIFICA
+                </button>
+            </div>
+
+        </form>
+    </div>
+</ng-template>
+
+<ng-template #elimina let-modal><!-- Modal con  form per le modifiche-->
+    <div class="modal-header">
+        <span class="text-white">Conferma eliminazione</span>
+    </div>
+    <div class="modal-body dz-modal">
+
+        <p class="text-center text-danger">Vuoi davvero cancellare il tuo account?</p>
+        <div class="btn-container">
+        <button class="annulla conferma_butt" (click)="modal.close('Save click');">
+            ANNULLA
+        </button>
+        <button class="modifica conferma_butt" type="submit" (click)="modal.close();eliminaUser(user!.idUser)">
+            CONFERMA
+        </button>
+    </div>
+    </div>
+    
+</ng-template>

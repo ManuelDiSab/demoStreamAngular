@@ -1,0 +1,111 @@
+@import '../../../variabili';
+@import '../../../gestione';
+
+
+input {
+    height: 6vh;
+}
+form,
+.table-episodi {
+    border: $borderBut;
+}
+
+.titolo_form {
+    //Classe dei titoli di tutti i form
+    color: rgba(255, 255, 255, 0.8);
+    text-align: center;
+}
+
+.episodi {
+    border: #fff 2px solid;
+    color: #fff;
+    &:hover {
+        color: #000;
+        background-color: #fff;
+        transition: .3s linear;
+    }
+}
+
+.back {
+    border: #c0c0c0 2px solid;
+    color: #c0c0c0;
+
+    &:hover {
+        color: #000;
+        background-color: #fff;
+        transition: .3s linear;
+    }
+}
+
+.table {
+    table-layout: fixed;
+    background-color: #1d1d1d;
+    width: 100%;
+    border-radius: 10px !important;
+
+    th {
+        color: rgba(255, 255, 255, 0.8);
+        text-align: center;
+    }
+
+    tr:nth-child(even) {
+        background-color: rgb(81, 81, 81, 0.3);
+    }
+
+    td {
+        text-align: center;
+        color: rgba(255, 255, 255, 0.8);
+
+        .img_loc {
+            width: -webkit-fill-available;
+        }
+    }
+}
+
+#tabella_selezionato {
+    tr {
+        th {
+            text-align: center;
+            vertical-align: middle;
+            color: rgba(255, 255, 255, 0.8);
+        }
+    }
+}
+
+.form_gestione {
+    border-radius: 0%;
+    border: none;
+}
+
+.card {
+    table-layout: fixed;
+    background-color: transparent !important;
+    width: 100%;
+    display: block;
+    margin: 30px auto;
+
+    .card-header {
+        align-items: center;
+        justify-content: space-around;
+        display: flex;
+
+        .ricerca {
+            //Input text per ricercare gli episodi
+            width: 30%;
+            margin: 0 !important;
+            background-color: transparent !important;
+            border: none !important;
+        }
+
+    }
+}
+
+@media(max-width:768px) {
+    .anno {
+        display: none !important;
+    }
+
+    .id_ep {
+        display: none;
+    }
+}

@@ -1,0 +1,105 @@
+<div id="alert"></div>
+<div class="tab-container">
+<form class="form_gestione gestione_utenti" [formGroup]="filter_form">
+    <div class="header_form">
+        <h2 class="titolo_form">UTENTI</h2>
+        <input type="text" class="form-control" id="searchBar" formControlName="search" (input)="ricercaUtenti()">
+        <div ngbDropdown class="d-inline-block dd">
+            <button type="button" id="scelta" ngbDropdownToggle>
+                Status
+            </button>
+            <div ngbDropdownMenu aria-labelledby="scelta" class="dd_list">
+                <a *ngFor="let item of obj_select" ngbDropdownItem (click)="selectUtentiByStatus(item.value)"
+                    href="javascript:void(0)" class="btn_scelta">{{item.label}}</a>
+            </div>
+        </div>
+    </div>
+    <table class="table table-striped" id="tabella_utenti">
+        <thead>
+            <tr class="text-white">
+                <th scope="col">Nome</th>
+                <th scope="col">Cognome</th>
+                <th scope="col">ID</th>
+                <th scope="col">Status</th>
+                <th scope="col">Ruolo</th>
+                <th scope="col"></th>
+                <th scope="col"></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let utente of arr_utenti; index as i">
+                <td class="nome">{{utente.nome}}</td>
+                <td class="cognome">{{utente.cognome}}</td>
+                <td>{{ utente.idUser }}</td>
+                <td>{{utente.status}}</td>
+                <td>{{utente.ruolo}}</td>
+                <td class="bottoni">
+
+                    <button class="button_gest disattiva" type="button" *ngIf="utente.n_status == 1"
+                        (click)="open(content);"><i class="bi bi-x-circle-fill"></i>
+                        
+                        <span class="interno_btn">DISATTIVA</span>
+                    </button>
+                    <button class="button_gest attiva" type="button" *ngIf="utente.n_status ==0"
+                        (click)="open(content)">
+                        <i class="bi bi-check-circle-fill"></i>
+                        <span class="interno_btn">ATTIVA</span>
+                    </button>
+                </td>
+                <td class="bottoni">
+                    <button class="button_gest elimina" type="button" (click)="open(elimina)">
+                        <i class="bi bi-trash3-fill"></i>
+                        <span class="interno_btn">ELIMINA</span>
+                    </button>
+                </td>
+                <ng-template #content let-modal>
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="modal-title">CONFERMA CAMBIO STATUS</h5>
+                    </div>
+                    <div class="modal-body">
+                        <p class="text-white">Sei sicuro di voler cambiare lo status dell'utente <span>"{{utente.nome}}"
+                                {{utente.cognome}} </span>
+                            con ID uguale a <span style="color: blue;">{{utente.idUser}}?</span> </p>
+                        <div class="btn-container">
+                            <button class="annulla conferma_butt"
+                                (click)="modal.close('Save click');"><!-- BUtton per annullare ed uscire dalla modal -->
+                                ANNULLA
+                            </button>
+                            <button
+                                (click)="cambiaStatus(utente.idUser,utente.status.toString());modal.close('Click click')"
+                                class="add conferma_butt">
+                                CONFERMA    
+                            </button>
+                        </div>
+
+                    </div>
+                </ng-template>
+                <ng-template let-modal #elimina>
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="modal-title">Conferma cancellazione</h5>
+                    </div>
+                    <div class="modal-body">
+                        <p class="text-white">Sei sicuro di voler cancellare l'utente <span>"{{utente.nome}}"
+                                {{utente.cognome}} </span>
+                            con ID uguale a <span style="color: rgb(255, 0, 0);">{{utente.idUser}}?</span> </p>
+
+                        <div class="btn-container">
+                            <button class="annulla conferma_butt"
+                                (click)="modal.close('Save click');"><!-- BUtton per annullare ed uscire dalla modal -->
+                                ANNULLA
+                            </button>
+                            <button (click)="eliminaUtente(utente.idUser);modal.close('Click click')"
+                                class="add conferma_butt">
+                                CONFERMA
+                            </button>
+                        </div>
+                    </div>
+                </ng-template>
+            </tr>
+        </tbody>
+        <tfoot>
+
+        </tfoot>
+    </table>
+</form>
+</div>

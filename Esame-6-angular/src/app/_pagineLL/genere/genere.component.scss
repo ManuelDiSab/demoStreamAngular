@@ -1,0 +1,41 @@
+h3{
+    padding: 1.5rem 1rem;
+    color: rgba(255,255,255, 0.8);
+}
+hr{
+    color: rgba(255,255,255, 0.8);
+    height: 2px;
+}
+
+.btns {
+    margin-bottom: 4vh;
+    .button {
+        background-color: black;
+        border: 1px solid rgba(255, 255, 255, 0.8);
+        color: rgba(255, 255, 255, 0.8);
+        border-radius: 5px;
+        padding: 10px;
+        margin: 2vh 1vh;
+        width: 10vw;
+
+        &:hover {
+            background-color: rgb(42, 42, 42);
+            transition: .2s linear;
+        }
+    }
+
+    .attivo {
+        background-color: rgb(34, 33, 33);
+
+    }
+}
+
+@media (max-width:1024px) {
+    .btns {
+        text-align: center;
+            .button {
+            border-radius: 50px;
+            width: 25vw;
+        }
+    }
+}

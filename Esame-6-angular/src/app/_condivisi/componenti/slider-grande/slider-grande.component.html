@@ -1,0 +1,81 @@
+<!--  ##################### SLIDER PER I DESKTOP ( E' POSSIBILE VISUALIZZARE IL FILM O LA SERIE SOLO AL CLICK DEL PULSANTE E NON ANCHE DELLO SLIDER ) #######   -->
+<ng-container>
+    <section class="grande">
+        <!-- Carosello grande primario in alto (INIZIO) -->
+        <ngb-carousel [interval]="0" >
+            <!-- Intervallo di 10 secondi per ogni slide -->
+            <ng-template ngbSlide *ngFor="let item of film; index as i">
+                <div id="principale"
+                    style="background-image:linear-gradient(to right, rgba(0, 0, 0, 1) 0%,
+            rgba(0, 0, 0, 0) 80%), linear-gradient(to top, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 0) 80%),url({{item.path}});">
+                    <div class="riga">
+                        <div class="colonna">
+                            <div class="contenuto">
+                                <h1 class="titolo">
+                                    {{item.titolo}}
+                                </h1>
+                                <p class="anno">{{item.anno}} -
+                                    <a class="genere" href="javascript:void(0)"
+                                        [routerLink]="'/genere/'+ item.genere">{{item.genere}} </a> -
+                                    {{item.voto}} <i class="bi bi-star-fill"></i>
+                                </p>
+                                <p class="trama">{{item.trama}}</p>
+                                <div class="btns">
+                                    <a *ngIf="item.film" class="button" href="javascript:void(0)"
+                                        [routerLink]="'/film/'+ item.titolo">GUARDA<i class="bi bi-play-fill"></i></a>
+                                    <a *ngIf="!item.film" class="button" href="javascript:void(0)"
+                                        [routerLink]="'/serie/'+ item.idSerie">GUARDA<i class="bi bi-play-fill"></i></a>
+                                    <button (click)="preferiti(item)" class="button"><i
+                                            [class.bi-bookmark-fill]="item?.preferito" class="bi"
+                                            [class.bi-bookmark]="!item?.preferito"></i></button>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </ng-template>
+        </ngb-carousel>
+    </section>
+
+
+    <!--  #############   SLIDER PER TABLET E MOBILE ( E' POSSIBILE CLICCARE SULLO SLIDER PER VEDERE IL FILM O LA SERIE )  ######################-->
+    <section class="piccolo">
+        <!-- Carosello grande primario in alto (INIZIO) -->
+        <ngb-carousel [interval]="0">
+            <!-- Intervallo di 10 secondi per ogni slide -->
+            <ng-template ngbSlide *ngFor="let item of film; index as i">
+                <a *ngIf="item.film" href="javascript:void(0)" [routerLink]="'/film/'+item.titolo">
+                    <!--  Faccio solo un gradiente col nero dal basso verso l'alto per fare un effetto ombra alla base  -->
+                    <div class="principale"
+                        style="background-image: linear-gradient(to top, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 0) 80%),url({{item.path}});">
+                        <div class="riga">
+                            <div class="colonna">
+                                <div class="contenuto">
+                                    <h1 class="titolo">
+                                        {{item.titolo}}
+                                    </h1>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+                <a *ngIf="!item.film" href="javascript:void(0)" [routerLink]="'/serie/' + item.idSerie">
+                    <div class="principale"
+                        style="background-image: linear-gradient(to top, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 0) 80%),url({{item.path}});">
+                        <div class="riga">
+                            <div class="colonna">
+                                <div class="contenuto">
+                                    <h1 class="titolo">
+                                        {{item.titolo}}
+                                    </h1>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </ng-template>
+        </ngb-carousel>
+    </section>
+</ng-container>

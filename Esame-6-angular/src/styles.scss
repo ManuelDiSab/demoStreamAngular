@@ -1,0 +1,97 @@
+/* Importo il file SCSS di Bootstrap  e di ng-select*/
+@import 'bootstrap/scss/bootstrap';
+@import "~@ng-select/ng-select/themes/default.theme.css";
+
+body {
+    background-color: #000000;
+}
+
+* {
+    padding: 0%;
+    margin: 0%;
+    box-sizing: border-box;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif
+}
+
+*:focus {
+    /* Elimno il bordo blu dagli elementi con autofocus */
+    box-shadow: none !important;
+}
+
+*[data-focus] {
+    box-shadow: none !important;
+}
+
+.ng-select .ng-input input {
+    color: #fff !important;
+}
+
+.ng-select .ng-control {
+    min-height: 0px;
+    border-radius: 0;
+}
+
+.ng-select.custom .ng-select-container {
+    height: 6vh;
+    color: #fff;
+    cursor: pointer;
+    background-color: rgba(40, 38, 38, 0.9);
+    border-radius: 4px;
+    border: 1px solid #ccc;
+    min-height: 36px;
+    align-items: center;
+}
+
+.ng-select.is-invalid .ng-select-container {
+    border-color: #ff0000;
+}
+
+.ng-select.ng-select-opened>.ng-select-container {
+    background: rgba(40, 38, 38, 0.9);
+    border-color: white;
+    color: white;
+}
+
+.ng-select.ng-select-opened>.ng-select-container .ng-arrow {
+    top: -2px;
+    border-color: transparent transparent #fff;
+    border-width: 0 5px 5px
+}
+
+.ng-dropdown-panel .ng-dropdown-panel-items .ng-option {
+    background-color: rgba(40, 38, 38, 0.9);
+    color: rgba(255, 255, 255, 0.87);
+    padding: 8px 10px
+}
+
+.ng-dropdown-panel .ng-dropdown-panel-items .ng-option.ng-option-selected,
+.ng-dropdown-panel .ng-dropdown-panel-items .ng-option.ng-option-selected.ng-option-marked {
+    //non serve
+    color: #fff;
+    background-color: #000000
+}
+
+.ng-dropdown-panel .ng-dropdown-panel-items .ng-option.ng-option-marked {
+    // background-color: #000000;
+    background-color: purple;
+    color: #fff;
+}
+
+.ng-dropdown-panel .ng-dropdown-panel-items .ng-optgroup {
+    user-select: none;
+    padding: 8px 10px;
+    font-weight: 500;
+    color: #fff;
+    cursor: pointer
+}
+
+@media(max-width:500px) {
+
+    //Dispositivi mobili
+    .ng-select.custom .ng-select-container {
+        height: 6vh
+    }
+}
+
+/* Importing Bootstrap SCSS file. */
+@import "./node_modules/bootstrap/scss/bootstrap";

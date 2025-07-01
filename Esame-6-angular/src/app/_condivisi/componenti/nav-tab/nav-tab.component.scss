@@ -1,0 +1,219 @@
+@import '../../../../variabili';
+
+* {
+    font-size: 1rem;
+}
+
+section {
+    .tablist {
+        display: flex;
+        justify-content: center;
+
+        li {
+            color: #fff;
+        }
+    }
+
+    p {
+        color: rgb(165, 165, 165);
+    }
+
+    .generi {
+        text-decoration: underline;
+        color: rgb(165, 165, 165);
+    }
+
+    .bottoni-clps {
+        color: #fff;
+    }
+
+    .bott-active {
+        text-decoration: underline rgb(174, 2, 174) 2px;
+        text-underline-offset: 1rem;
+    }
+}
+
+#stagioni {
+    width: 200px;
+    background-color: $inputBc;
+    border: $borderBut;
+    color: #fff;
+    margin: 50px 50px;
+
+    .stagione {
+        background-color: $inputBc;
+        color: #fff;
+    }
+}
+
+.ep_container {
+    display: flex;
+    margin: 20px 0;
+    border-radius: 15px;
+
+    &:hover {
+        background-color: #111111;
+
+        .video {
+            .img_ep {
+                opacity: 0.5;
+                object-position: cover;
+            }
+
+            .bi-play-fill {
+                opacity: 1;
+                transition: .5s;
+            }
+
+        }
+
+    }
+
+    .video {
+        position: relative;
+
+        .img_ep {
+            width: 35vw;
+            height: 250px;
+            border-radius: 10px;
+            cursor: pointer;
+
+        }
+
+        .bi-play-fill {
+            color: #fffbfb;
+            font-size: 100px;
+            position: absolute;
+            top: 20%;
+            left: 40%;
+            opacity: 0;
+
+            &:hover {
+                transform: scale(1.1);
+                transition: linear 0.4s;
+                cursor: pointer;
+
+            }
+        }
+    }
+
+    .contenuti {
+        padding: 15px;
+        display: flex;
+        flex-direction: column;
+        width: 60%;
+
+        .bi-star-fill {
+            color: goldenrod;
+        }
+
+        .num {
+            font-size: 20px;
+            color: rgba(255, 255, 255, 1);
+            white-space: nowrap;
+        }
+
+        .durata {
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 1rem;
+        }
+
+        .voto {
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 16px;
+        }
+
+        .trama {
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 1rem;
+        }
+    }
+}
+
+.chiudi {
+    color: #cbcbcb;
+    cursor: pointer;
+    position: absolute;
+    z-index: 9999;
+    right: 30px;
+    top: 30px;
+
+    // display: none;
+    &::before {
+        height: 30px;
+        width: 30px;
+    }
+
+    &:hover {
+        color: #dcd9d9;
+    }
+}
+
+.sopra {
+    display: block;
+    position: absolute;
+    top: 0;
+    right: 0;
+    z-index: 9999;
+    height: 10vh;
+    width: 100%;
+
+}
+
+.video_modal {
+    height: 100vh;
+    object-fit: contain;
+}
+
+@media(max-width:768px) {
+    .lista-episodi {
+        padding:0;
+        .ep_container {
+            background-color: rgba(33,37,41,1);
+            border-radius: 15px;
+            .video {
+                width: 10vw;
+                display: flex;
+                align-items: center;
+                padding: 0vw 2vw;
+                .img_ep {
+                    display: none;
+                }
+
+                button {
+                    width: 6vw;
+                    height: 6vh;
+                    background-color: #fff;
+                    border-radius: 50%;
+
+                    .bi-play-fill {
+                        opacity: 1;
+                        font-size: 3vw;
+                        position: static;
+                        color: #111111;
+                        
+                    }
+                }
+            }
+
+            .contenuti {
+
+                .trama,
+                .voto {
+                    display: none;
+                }
+            }
+        }
+    }
+}
+
+@media(max-width:425px){
+    button{
+        border: 0px !important;
+        background-color: transparent !important;
+        i{
+            color: #cbcbcb !important;
+            font-size: 7vw !important;
+        }
+    }
+}

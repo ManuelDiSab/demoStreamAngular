@@ -1,0 +1,18 @@
+@import '../../../variabili';
+*{
+    margin:0;
+}
+.noAuth{
+    background-color: $navColorReg;
+    padding-left: 20px; 
+    #logo{
+        width: 10rem;
+    }
+    button,
+#login_b {
+    border: $borderBut;
+        background-color: $buttonBC;
+    }
+}
+
+

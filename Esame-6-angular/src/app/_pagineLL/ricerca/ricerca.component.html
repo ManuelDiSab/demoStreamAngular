@@ -1,0 +1,8 @@
+<h3 id="ricerca">Risulati per "{{ricerca}}"</h3>
+<hr>
+<div class="btns" (click)="onButtonGroupClick($event)">
+    <button class="button attivo" id="tutti" type="button">Tutti</button>
+    <button class="button" id="film" type="button">Film</button>
+    <button class="button" id="serie" type="button">Serie TV</button>
+</div>
+<container-list [elementi]="arr_ricerca" ></container-list>

@@ -1,0 +1,10 @@
+{
+    "/api":{
+        "target":"http://localhost/ESAME_N_6/esame-6-laravel/public/api",
+        "secure":"false",
+        "changeOrigin":"true",
+        "pathRewrite":{
+            "^/api":""
+        }
+    }
+}

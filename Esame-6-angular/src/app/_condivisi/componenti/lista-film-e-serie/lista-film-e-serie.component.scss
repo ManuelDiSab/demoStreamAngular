@@ -1,0 +1,205 @@
+.contenitore {
+    display: flex;
+    flex-wrap: wrap;
+
+    .card {
+        z-index: 0;
+        margin-right: 10px;
+        background-color: #000;
+        cursor: pointer;
+        padding: 10px;
+        width: 20%;
+        text-decoration: none;
+
+        img {
+            border-radius: 5px;
+        }
+
+        &:hover {
+            z-index: 1;
+
+            .info {
+                // display: block;
+                opacity: 1;
+                border-radius: 5px;
+                border: 1px solid purple;
+                background-color: #181818;
+            }
+        }
+
+        .info {
+            position: absolute;
+            opacity: 0;
+            display: none;
+            left: 0;
+            top: 0;
+            padding: 10px;
+            color: rgba(255, 255, 255, 0.8);
+
+            button,
+            .riproduci {
+                text-decoration: none;
+                padding: 6px 12px;
+                border-radius: 5px;
+                background: purple;
+                border: 2px solid purple;
+                color: #fff;
+                margin-right: 0.5rem;
+                margin-bottom: 0.5rem;
+                font-size: 15px;
+                transition: .3s linear;
+                cursor: pointer;
+
+                .bi {
+                    font-size: 15px;
+                }
+
+                &:hover {
+                    border: 2px solid #fff;
+                    color: violet;
+                    background: #000;
+                }
+            }
+
+            .riproduci {
+                width: 50%;
+            }
+
+            .trailer,
+            .preferiti {
+                //Pulsanti per vedere il trailer e per rimuovere o aggiungere alla lista preferiti
+                width: 15%;
+            }
+
+            .info_varie {
+                font-size: 14px;
+                color: rgba(255, 255, 255, 0.5);
+
+                .bi {
+                    //Icona della stella per il voto
+                    color: goldenrod;
+                }
+            }
+
+            .trama {
+                //Trama del film o della serie tv
+                overflow: hidden;
+                display: -webkit-box;
+                -webkit-line-clamp: 3;
+                line-clamp: 3;
+                -webkit-box-orient: vertical;
+            }
+        }
+    }
+}
+
+@media(max-width: 1024px) {
+
+    //Tablet di grandi dimensioni 
+    .contenitore {
+        width: 100%;
+        display: flex;
+
+        .card {
+            width: 50%;
+            height: 20vh;
+            margin: 0;
+            display: flex;
+            flex-direction: row;
+
+            a {
+                overflow: hidden;
+                width: 50%;
+                border-radius: 5px;
+            }
+
+
+            &:hover {
+                img {
+                    display: block;
+                }
+
+                .info {
+                    opacity: 1;
+                    border: 0px;
+                    background-color: transparent !important;
+                }
+            }
+
+            img {
+                width: 30vw;
+                object-fit: contain;
+            }
+
+            .info {
+                display: block !important;
+                opacity: 1;
+                position: relative !important;
+                width: 50%;
+
+                video {
+                    display: none;
+                }
+
+                .titolo {
+                    text-align: center !important;
+                    font-size: 1rem;
+                }
+
+                button,
+                .riproduci {
+                    display: none;
+                }
+
+                .info_varie {
+                    text-align: center;
+                    font-size: 1rem;
+                }
+
+                .trama {
+                    display: none;
+                }
+            }
+        }
+    }
+}
+
+@media(max-width: 768px) {
+
+    //Tablet
+    .contenitore {
+        width: 100%;
+        display: flex;
+
+        .card {
+            width: 100%;
+            margin: 0;
+            display: flex;
+            flex-direction: row;
+
+            img {
+                width: 50vw;
+                object-fit: cover;
+
+            }
+
+            .info {
+                display: block;
+                opacity: 1;
+                position: relative !important;
+                width: 50%;
+            }
+        }
+    }
+
+}
+
+@media(max-width: 575px) {
+
+    .titolo,
+    .info_varie {
+        text-align: center !important;
+        font-size: 3vw !important;
+    }
+
+}

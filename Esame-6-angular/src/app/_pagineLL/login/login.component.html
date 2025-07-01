@@ -1,0 +1,54 @@
+<section class="section_login" *ngIf="(auth | async)?.token === null">
+    <ng-container>
+        <div class="col-md-5 col-sm-10 mx-auto align-items-center mb-5 px-3" id="contenuto">
+            <form class="p-3 mx-auto" id="login" name="form_login" [formGroup]="reactiveForm" (ngSubmit)="accedi()">
+                <!-- Form per il login -->
+                <h3 class="text-white text-center">Accedi</h3><!--slogan-->
+                <div class="ms-3" *ngIf="!isAttivo">
+                    <p class="text-danger">Il tuo account non è attivo! Contatta l'assistenza</p>
+                </div>
+                <div class="ms-3" *ngIf="!isAutenticato">
+                    <p class="text-danger">Password o email non corrette</p>
+                </div>
+                <div class="mb-3 p-3">
+                    <label for="InputEmail1" class="form-label text-white" [class.is-invalid]="reactiveForm.get('utente')?.invalid
+                        && (reactiveForm.get('utente')?.dirty || reactiveForm.get('utente')?.touched)">E-mail</label>
+                    <input type="email" class="mx-auto form-control text-white" [class.is-invalid]="reactiveForm.get('utente')?.invalid
+                        && (reactiveForm.get('utente')?.dirty || reactiveForm.get('utente')?.touched)" id="InputEmail1"
+                        name="utente" formControlName="utente">
+                        <span *ngIf="reactiveForm.get('utente')?.hasError('required') && (reactiveForm.get('utente')?.dirty || reactiveForm.get('utente')?.touched)"
+                        class="is-invalid">Inserisci un email valida
+                        </span>
+
+                </div>
+
+                <div class="mb-3 p-3"><!-- Password -->
+                    <label for="InputPassword1" [class.is-invalid]="reactiveForm.get('password')?.invalid
+                        && (reactiveForm.get('password')?.dirty || reactiveForm.get('password')?.touched)"
+                        class="form-label text-white">Password</label>
+                    <input type="password" class="mx-auto form-control text-white" id="InputPassword1" name="password"
+                        [class.is-invalid]="reactiveForm.get('password')?.invalid
+                        && (reactiveForm.get('password')?.dirty || reactiveForm.get('password')?.touched)"
+                        formControlName="password">
+                        <span *ngIf="reactiveForm.get('password')?.hasError('required') && (reactiveForm.get('password')?.dirty || reactiveForm.get('password')?.touched)"
+                        class="is-invalid">    Il campo password è richiesto
+                        </span>
+                </div>
+                <div class="mb-3 p-3 d-flex container-fluid">
+                    <button class="btn mx-auto text-white w-100" id="accedi" type="submit"
+                        [disabled]="!reactiveForm.valid">Accedi</button>
+                </div>
+                <!-- <div class="mb-3 p-3">
+                    <input type="checkbox" class="form-check-input" id="Check1">
+                    <label class="form-check-label text-white btn-dark px-2" for="Check1">Ricordati</label>
+                </div>   -->
+                <div class="mb-3 p-3">
+                    <div class="col"><!-- Input del nome -->
+                        <p class="text-white">Prima volta qui? <a href="javascript:void(0)"
+                                [routerLink]="'/register'">Registrati</a></p>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </ng-container>
+</section>

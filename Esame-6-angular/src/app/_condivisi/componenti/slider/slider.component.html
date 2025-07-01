@@ -1,0 +1,137 @@
+<h3 class="titolo_gruppo">{{titolo}}<a href="javascript:void(0)" [routerLink]="'/genere/'+idGenere"
+        class="genere">{{genere}}</a></h3>
+<div class="content-section implementation carousel-demo" style="z-index:0 !important">
+    <div class="cards">
+        <p-carousel [value]="film" [numVisible]="5" [numScroll]="5" [circular]="false" [autoplayInterval]="100000000000"
+            [responsiveOptions]="responsiveOptions" [showIndicators]="false"
+            class="caroseel"><!-- Autoplay on numero alto e "circular=false" altrimenti da problemi-->
+            <ng-template let-movie pTemplate="item">
+                <!-- In caso la risorsa passata sia un film  -->
+                <div *ngIf="movie.idFilm" class="item card schermo-grande" (mouseenter)="alMOuseEnter(info, img)"
+                    (mouseleave)="alMouseLeave(info, img)">
+                    <!-- (mouseenter)="onOverCard(carta,movie)" (mouseleave)="onLeaveResetCard()"> -->
+                    <a href="javascript:void(0)" [routerLink]="'/film/'+movie.titolo">
+                        <img [src]="movie.path" class="card-img-top" [alt]="movie.path" #img>
+                    </a>
+
+                    <div class="info" (mouseenter)="onOver(video)" (mouseleave)="onLeave(video)" #info>
+                        <video [muted]="true" class="card-img-top" #video>
+                            <source src="https://codingyaar.com/wp-content/uploads/video-in-bootstrap-card.mp4">
+                        </video>
+                        <p class="my-2 text-center">{{movie.titolo}} </p>
+                        <div class="btns">
+                            <a class="riproduci btn" href="javascript:void(0)" [routerLink]="'/film/'+movie.titolo">
+                                Riprouci <i class="bi bi-play-fill"></i></a>
+
+                            <button (click)="preferiti(movie)" class="preferiti btn"><i
+                                    [class.bi-bookmark-fill]="movie?.preferito" class="bi"
+                                    [class.bi-bookmark]="!movie?.preferito"></i></button>
+                            <button class="trailer btn"><i class="bi bi-film"></i></button>
+                        </div>
+                        <p class="info_varie my-2" *ngIf="movie.film">{{movie.anno}} - {{movie.durata}} - {{movie.voto}}
+                            <i class="bi bi-star-fill"></i> - <small class="text-success">{{movie.genere}}</small>
+                        </p>
+                        <p class="info_varie my-2" *ngIf="!movie.film">{{movie.anno}} - {{movie.n_stagioni}} Stagioni -
+                            {{movie.voto}} <i class="bi bi-star-fill"></i> - <small
+                                class="text-success">{{movie.genere}}</small>
+                        </p>
+                        <!-- <p class="trama">{{movie.trama}}</p> -->
+                    </div>
+                </div>
+
+                <!--  In caso la risorsa passata sia una serie  -->
+                <div class="item card schermo-grande" href="javascript:void(0)"     
+                    #carta *ngIf="!movie.film" (mouseenter)="alMOuseEnter(info, img)"
+                    (mouseleave)="alMouseLeave(info, img )">
+                    <a href="javascript:void(0)" [routerLink]="'/serie/'+movie.idSerie">
+                        <img [src]="movie.path" class="card-img-top" [alt]="movie.path" #img>
+                    </a>
+                    <div class="info" #info>
+                        <video [muted]="true" class="card-img-top" #video>
+                            <source src="https://codingyaar.com/wp-content/uploads/video-in-bootstrap-card.mp4">
+                        </video>
+                        <p class="my-2 text-center">{{movie.titolo}} - <small class="text-success">{{movie.genere
+                                }}</small></p>
+                        <div class="btns">
+                            <a  class="riproduci btn" href="javascript:void(0)" [routerLink]="'/serie/'+ movie.idSerie">
+                                Riprouci <i class="bi bi-play-fill"></i></a>
+
+                            <button (click)="preferiti(movie)" class="preferiti btn"><i
+                                    [class.bi-bookmark-fill]="movie?.preferito" class="bi"
+                                    [class.bi-bookmark]="!movie?.preferito"></i></button>
+                            <button class="trailer btn"><i class="bi bi-film"></i></button>
+                        </div>
+                        <p class="info_varie my-2" *ngIf="movie.film">{{movie.anno}} - {{movie.durata}} - {{movie.voto}}
+                            <i class="bi bi-star-fill"></i>
+                        </p>
+                        <p class="info_varie my-2" *ngIf="!movie.film">{{movie.anno}} - {{movie.n_stagioni}} Stagioni -
+                            {{movie.voto}}
+                            <i class="bi bi-star-fill"></i>
+                        </p>
+                        <!-- <p class="trama">{{movie.trama}}</p> -->
+                    </div>
+                </div>
+
+                <a *ngIf="movie.idFilm" class="item card schermo-piccolo" href="javascript:void(0)"
+                    [routerLink]="'/film/'+ movie.titolo" (mouseenter)="alMOuseEnter(info, img)"
+                    (mouseleave)="alMouseLeave(info, img)">
+                    <!-- (mouseenter)="onOverCard(carta,movie)" (mouseleave)="onLeaveResetCard()"> -->
+                    <img [src]="movie.path" class="card-img-top" [alt]="movie.path" #img>
+                    <div class="info" (mouseenter)="onOver(video)" (mouseleave)="onLeave(video)" #info>
+                        <video [muted]="true" class="card-img-top" #video>
+                            <source src="https://codingyaar.com/wp-content/uploads/video-in-bootstrap-card.mp4">
+                        </video>
+                        <p class="my-2 text-center">{{movie.titolo}} </p>
+                        <div class="btns">
+                            <button class="riproduci btn">Riprouci <i class="bi bi-play-fill"></i></button>
+
+                            <button (click)="preferiti(movie)" class="preferiti btn"><i
+                                    [class.bi-bookmark-fill]="movie?.preferito" class="bi"
+                                    [class.bi-bookmark]="!movie?.preferito"></i></button>
+                            <button class="trailer btn"><i class="bi bi-film"></i></button>
+                        </div>
+                        <p class="info_varie my-2" *ngIf="movie.film">{{movie.anno}} - {{movie.durata}} - {{movie.voto}}
+                            <i class="bi bi-star-fill"></i> - <small class="text-success">{{movie.genere}}</small>
+                        </p>
+                        <p class="info_varie my-2" *ngIf="!movie.film">{{movie.anno}} - {{movie.n_stagioni}} Stagioni -
+                            {{movie.voto}} <i class="bi bi-star-fill"></i> - <small
+                                class="text-success">{{movie.genere}}</small>
+                        </p>
+                    </div>
+                </a>
+
+                <!--  In caso la risorsa passata sia una serie  -->
+                <a class="item card schermo-piccolo " href="javascript:void(0)" [routerLink]="'/serie/'+ movie.idSerie"
+                    #carta *ngIf="!movie.film" (mouseenter)="alMOuseEnter(info, img    )"
+                    (mouseleave)="alMouseLeave(info, img )">
+                    <img [src]="movie.path" class="card-img-top" [alt]="movie.path" #img>
+                    <div class="info" #info>
+                        <video [muted]="true" class="card-img-top" #video>
+                            <source src="https://codingyaar.com/wp-content/uploads/video-in-bootstrap-card.mp4">
+                        </video>
+                        <p class="my-2 text-center">{{movie.titolo}} - <small class="text-success">{{movie.genere
+                                }}</small></p>
+                        <div class="btns">
+                            <button class="riproduci">Riprouci <i class="bi bi-play-fill"></i></button>
+
+                            <button (click)="preferiti(movie)" class="preferiti btn"><i
+                                    [class.bi-bookmark-fill]="movie?.preferito" class="bi"
+                                    [class.bi-bookmark]="!movie?.preferito"></i></button>
+                            <button class="trailer btn"><i class="bi bi-film"></i></button>
+
+                            <button class="trailer"><i class="bi bi-film"></i></button>
+                        </div>
+                        <p class="info_varie my-2" *ngIf="movie.film">{{movie.anno}} - {{movie.durata}} - {{movie.voto}}
+                            <i class="bi bi-star-fill"></i>
+                        </p>
+                        <p class="info_varie my-2" *ngIf="!movie.film">{{movie.anno}} - {{movie.n_stagioni}} Stagioni -
+                            {{movie.voto}}
+                            <i class="bi bi-star-fill"></i>
+                        </p>
+                        <!-- <p class="trama">{{movie.trama}}</p> -->
+                    </div>
+                </a>
+            </ng-template>
+        </p-carousel>
+    </div>
+</div>

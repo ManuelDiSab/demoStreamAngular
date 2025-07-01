@@ -1,0 +1,17 @@
+<!-- Navbar per il login e la registrazione -->
+<nav class="navbar border-bottom-warning noAuth" *ngIf="(auth | async)?.token == null"><!-- Inizio della navbar -->
+    <div class="container-fluid">
+        <a class="navbar-brand text-success d-md-inline-block" href="javascript:void(0)" [routerLink]="'/login'">
+            <img [src]="logo" alt="logo" id="logo"></a><!-- logo che funziona anche da pulsante home-->
+        <div class="" id="navbarSupportedContent">      
+            <div class="d-flex">
+                <a class="btn ms-auto text-white" data-bs-target="#staticBackdrop" id="login_b"
+                    href="javascript:void(0)" [routerLink]="['/']"
+                    [routerLinkActive]="['attivo']">Login</a><!--Bottone modal del login -->
+            </div>
+        </div>
+    </div>
+</nav><!-- Fine della navbar -->
+
+
+

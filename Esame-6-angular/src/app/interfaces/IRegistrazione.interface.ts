@@ -1,0 +1,19 @@
+export interface IRegistrazione {
+    nome:string,
+    cognome:string,
+    utente:string,
+    password:string, 
+    password_confirmation:string,
+    dataNascita:any,
+    sesso:0|1,
+    tel:string, 
+    codFis:string,
+    comuneNascita:string,
+    provincia:string,
+    comune:number,
+    nazione:number,
+    cap:string,
+    indirizzo:string,
+    civico:string,
+    tipologiaIndirizzo:number
+}

@@ -1,0 +1,57 @@
+@import '../../../variabili';
+@import '../../../gestione';
+
+.form_gestione {
+    //Classe per tutti e tre i form della gestione
+    color: #fff;
+    width: 100%;
+    margin: 5vh auto ;
+    border-radius: 10px;
+    border: none !important;
+    background-color: transparent !important;
+    padding: 15px;
+    .header_form {
+        //Classe dei titoli di tutti i form
+        color: #fff;    
+        display: flex;
+        justify-content:space-between;
+        #searchBar{
+            width: 30%;
+            background-color: $inputBc;
+            color: #fff;
+            height: 80%;
+            // border-radius: 15px;
+        }
+    }
+    @media (max-width:600px){
+        .interno_btn{
+            display: block;
+        }
+    }
+    // th{
+    //     color: #fff;
+    // }
+    // tr{
+    //     font-size: 30px;
+    //     &:nth-child(even){
+    //         background-color: rgb(81, 81, 81, 0.3);
+    //     }
+    // }
+
+    // td{
+    //     color: #fff;
+    //     font-size: 16px;
+    // }
+    }
+
+    // @media(max-width:900px) {
+    //     .form_gestione{
+    //         width: 90%;
+    //     }
+    //     .text_button{
+    //         display: none;
+    //     }
+    //     .attiva,.disattiva{
+    //         padding: 3%;
+    //     }
+    // }   

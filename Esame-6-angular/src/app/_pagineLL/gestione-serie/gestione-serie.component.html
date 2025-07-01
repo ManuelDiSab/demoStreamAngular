@@ -1,0 +1,383 @@
+<div id="alert"></div>
+
+<form [formGroup]="form_scelta" *ngIf="episodioSelezionato === null">
+    <h2 class="titolo_form ">Cerca o aggiungi una serie</h2>
+
+    <ng-select class="custom mx-2" formControlName="scelta_serie" [(ngModel)]="serieSelezionata" (change)="setEpisodi()"
+        (search)="cercaSerie(input.searchTerm)" #input>
+        <ng-option *ngFor="let item of arr_serie_ricerca" [value]="item">{{item.titolo}}</ng-option>
+    </ng-select>
+    <div class="btn-container"><!-- contenitore dei button-->
+        <button class="button_gest back" (click)="serieSelezionata = null;isCollapsed = true"
+            *ngIf="serieSelezionata!== null"><i class="bi bi-arrow-90deg-left"></i> INDIETRO</button>
+        <button class="add button_gest" (click)="open(form);setFormSerie('add');resetSerie()"><i
+                class="bi bi-plus-square-fill me-1"></i>AGGIUNGI</button>
+        <button class="elimina button_gest" (click)="open(eliminazione)" *ngIf="serieSelezionata != null"><i
+                class="bi bi-trash3-fill me-1"></i>ELIMINA</button>
+        <button class="modifica button_gest" (click)="open(form);setFormSerie('mod')" *ngIf="serieSelezionata != null"
+            (click)="inserimentoSerieDaModificare()"><i class="bi bi-brush-fill me-1"></i>MODIFICA</button>
+        <button class="episodi button_gest" *ngIf="serieSelezionata != null" (click)="isCollapsed = ! isCollapsed"
+            [attr.aria-expanded]="!isCollapsed" aria-controls="collapseExample"><i
+                class="bi bi-collection-play-fill me-1">
+            </i>EPISODI </button>
+    </div>
+
+    <table class="table table-striped" *ngIf="serieSelezionata === null"><!--Table con alcune serie film (max 10)-->
+        <thead>
+            <tr>
+                <th scope="col" class="id">ID</th>
+                <th scope="col" class="titolo">Titolo</th>
+                <th scope="col" class="anno">Anno</th>
+                <th scope="col" class="locandina">Locandina</th>
+                <th></th>
+                <th></th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let serie of arr_serie">
+                <td scope="row">{{serie.idSerie}}</td>
+                <td>{{serie.titolo}}</td>
+                <td>{{serie.anno}}</td>
+                <td> <img [src]="serie.path" class="me-2 img_loc" /> </td>
+                <td>
+                    <button class="elimina button_gest" (click)="open(eliminazione);setSerie(serie)"><i
+                            class="bi bi-trash3-fill me-1"></i>ELIMINA
+                    </button><!--Button per aprire la modal di eliminazione-->
+                </td>
+                <td>
+                    <button class="modifica button_gest me-1" (click)="open(form);setSerie(serie);setFormSerie('mod');
+                    inserimentoSerieDaModificare();"><i
+                            class="bi bi-brush-fill"></i>MODIFICA</button><!--Button per aprire la modal di modifica-->
+                </td>
+                <td>
+                    <button class="episodi button_gest"
+                        (click)="isCollapsed = ! isCollapsed; setSerie(serie);setEpisodi()"
+                        [attr.aria-expanded]="!isCollapsed" aria-controls="collapseExample"><i
+                            class="bi bi-collection-play-fill me-1">
+                        </i>EPISODI </button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-striped"><!--Table della serie-->
+        <tbody id="tabella_selezionato" *ngIf="serieSelezionata && isCollapsed === true">
+            <!--  Fare la parte in tyescript-->
+            <tr>
+                <th>TITOLO</th>
+                <td>{{serieSelezionata.titolo }}</td>
+            </tr>
+            <tr>
+                <th>TRAMA</th>
+                <td>{{serieSelezionata.trama }}</td>
+            </tr>
+            <tr>
+                <th>LOCANDINA</th>
+                <td> <img [src]="serieSelezionata.path" class="me-2 img_loc" /> </td>
+            </tr>
+            <tr>
+                <th>NUMERO STAGIONI</th>
+                <td>{{serieSelezionata.n_stagioni }}</td>
+            </tr>
+            <tr>
+                <th>VOTO</th>
+                <td>{{serieSelezionata.voto }}</td>
+            </tr>
+            <tr>
+                <th>GENERE</th>
+                <td>{{serieSelezionata.genere }}</td>
+            </tr>
+            <tr>
+                <th>ANNO INIZIO </th>
+                <td>{{serieSelezionata.anno }}</td>
+            </tr>
+            <tr>
+                <th>ANNO CONCLUSIONE</th>
+                <td>{{serieSelezionata.anno_fine }}</td>
+            </tr>
+        </tbody>
+    </table>
+</form>
+
+<ng-template #form let-modal><!-- ### FORM PER LA MODIFICA DELLA SERIE SELEZIONATA -->
+    <div class="modal-header">
+        <h5 class="modal-title" id="modal-title" *ngIf="n_form ===1">Nuova Serie-TV</h5>
+        <h5 class="modal-title" id="modal-title" *ngIf="n_form ===2">Form di modifica di "{{serieSelezionata?.titolo}}"
+        </h5>
+    </div>
+
+    <div class="modal-body ">
+        <form [formGroup]="form_serie" class="form_gestione gestione_serie">
+
+            <div class="row g-2 mb-3 p-3 mx-1"><!-- TITOLO -->
+                <div class="col"><!-- #########   TITOLO  ############## -->
+                    <label class="form-label" for="titolo" [class.is-invalid]="form_serie.get('titolo')?.invalid &&
+                    (form_serie.get('titolo')?.touched)">Titolo</label>
+                    <input type="text" class="form-control" formControlName="titolo" id="titolo" aria-hidden="flase"
+                        [class.is-invalid]="form_serie.get('titolo')?.invalid &&
+                    (form_serie.get('titolo')?.touched)">
+                    <span *ngIf="form_serie.get('titolo')?.hasError('required') && (form_serie.get('titolo')?.touched)"
+                        class="is-invalid">Inserisci un titolo valido
+                    </span>
+                </div>
+            </div>
+
+            <div class="row g-2 mb-3 p-3 mx-1"><!-- GENERI E STAGIONI  -->
+                <div class="col"><!-- ######## GENERE PRINCIPALE ########## -->
+                    <label class="form-label" for="genere" [class.is-invalid]="form_serie.get('genere')?.invalid &&
+                    (form_serie.get('genere')?.touched)">Genere</label>
+                    <ng-select formControlName="genere" id="genere" class="custom select-gen" [class.is-invalid]="form_serie.get('genere')?.invalid &&
+                    (form_serie.get('genere')?.touched)">
+                        <ng-option *ngFor="let genere of arr_generi"
+                            [value]="genere.idGenere">{{genere.nome}}</ng-option>
+                    </ng-select>
+                    <span *ngIf="form_serie.get('genere')?.hasError('required') && (form_serie.get('genere')?.touched)"
+                        class="is-invalid">Campo richiesto
+                    </span>
+                </div>
+                <div class="col col-lg-6"><!-- ######## NUMERO DI STAGIONI ########-->
+                    <label class="form-label" for="stagioni" [class.is-invalid]="form_serie.get('stagioni')?.invalid &&
+                    (form_serie.get('stagioni')?.touched)">Stagioni</label>
+                    <input type="text" class="form-control" formControlName="stagioni" id="stagioni" [class.is-invalid]="form_serie.get('stagioni')?.invalid &&
+                    (form_serie.get('stagioni')?.touched)">
+                </div>
+                <span *ngIf="form_serie.get('stagioni')?.hasError('required') && (form_serie.get('stagioni')?.touched)"
+                    class="is-invalid">Formato numerico
+                </span>
+            </div>
+
+
+            <div class="row g-2 mb-3 p-3 mx-1"><!-- ANNO DI INIZIO, ANNO DI FINE(SE ESISTE) E VOTO-->
+                <div class="col col-lg-4"><!-- #####  ANNO  ########-->
+                    <label class="form-label" for="anno_inizio" [class.is-invalid]="form_serie.get('anno_inizio')?.invalid &&
+                    (form_serie.get('anno_inizio')?.touched)">Anno_inizio</label>
+                    <input class="form-control" type="text" formControlName="anno_inizio" id="anno_inizio"
+                        [class.is-invalid]="form_serie.get('anno_inizio')?.invalid &&
+                    (form_serie.get('anno_inizio')?.touched)">
+                </div>
+                <div class="col col-lg-4"><!-- #####  anno_fine  ########-->
+                    <label class="form-label" for="anno_fine" [class.is-invalid]="form_serie.get('anno_fine')?.invalid &&
+                    (form_serie.get('anno_fine')?.touched)">anno_fine</label>
+                    <input class="form-control" type="text" formControlName="anno_fine" id="anno_fine"
+                        [class.is-invalid]="form_serie.get('anno_fine')?.invalid &&
+                    (form_serie.get('anno_fine')?.touched)">
+                </div>
+                <div class="col col-lg-4"><!-- #####  VOTO  ########-->
+                    <label class="form-label" for="voto" [class.is-invalid]="form_serie.get('voto')?.invalid &&
+                    (form_serie.get('voto')?.touched)">Voto</label>
+                    <input class="form-control" type="text" formControlName="voto" id="voto" [class.is-invalid]="form_serie.get('voto')?.invalid &&
+                    (form_serie.get('voto')?.touched)">
+                </div>
+            </div>
+
+            <div class="row g-2 mb-3 p-3 mx-1 "><!--####  TEXT AREA PER LA TRAMA -->
+                <div class="col"><!-- #####  TRAMA  ########-->
+                    <label class="form-label" for="trama" [class.is-invalid]="form_serie.get('trama')?.invalid &&
+                    (form_serie.get('trama')?.touched)">Incipit</label>
+                    <textarea class="form-control" type="text" formControlName="trama" id="trama" rows="3"
+                        role="textbox" [class.is-invalid]="form_serie.get('trama')?.invalid &&
+                    (form_serie.get('trama')?.touched)">
+                    </textarea>
+                    <span *ngIf="form_serie.get('trama')?.hasError('required') && (form_serie.get('trama')?.touched)"
+                        class="is-invalid">Inserisci una trama valida / max 500 caratteri
+                    </span>
+                </div>
+            </div>
+
+            <div class="row g-2 mb-3 p-3 mx-1"><!--####  IMG  ##########-->
+                <div class="col"><!-- #####  IMG  ########-->
+                    <label class="form-label" for="img" [class.is-invalid]="form_serie.get('img')?.invalid &&
+                    (form_serie.get('img')?.touched)">Locandina</label>
+                    <input class="form-control" type="file" formControlName="img" id="locandina" [class.is-invalid]="form_serie.get('img')?.invalid &&
+                    (form_serie.get('img')?.touched)" (change)="postImg($event)">
+                    
+                </div>
+            </div>
+            <div class="btn-container">
+                <button class="annulla conferma_butt" (click)="modal.close('Save click');">
+                    ANNULLA
+                </button>
+                <button class="add conferma_butt" *ngIf="n_form === 1"
+                    (click)="AggiungiOnClickSerie();modal.close('Save click')" [disabled]="form_serie.invalid"
+                    [ngClass]="form_serie.invalid ? 'disabled-add' : ''">
+                    AGGIUNGI <i class="bi bi-plus-square-fill"></i>
+                </button>
+                <button class="modifica conferma_butt" type="submit"
+                    (click)="ModificaOnClickSerie();modal.close('Save click')" *ngIf="n_form === 2">
+                    MODIFICA <i class="bi bi-brush-fill"></i>
+                </button>
+            </div>
+
+
+        </form>
+    </div>
+</ng-template>
+
+<ng-template #eliminazione let-modal><!-- MODAL PER LA CONFERMA DELL'ELIMINAZIONE DELLA SERIE-->
+    <div class="modal-header">
+        <h5 class="modal-title" id="modal-title">Eliminazione "{{serieSelezionata?.titolo}}"</h5>
+    </div>
+    <div class="modal-body eliminazione">
+        <p class="conferma">Sei sicuro di voler eliminare la serie-tv "{{serieSelezionata?.titolo}}"?</p>
+        <div class="btn-container">
+            <button class="annulla conferma_butt" (click)="modal.close('annulla click')">
+                ANNULLA
+            </button>
+            <button class="elimina conferma_butt" (click)="EliminaOnClickSerie();modal.close('Save click');">
+                ELIMINA <i class="bi bi-trash3-fill"></i>
+            </button>
+        </div>
+    </div>
+</ng-template>
+
+<div #collapse="ngbCollapse" [(ngbCollapse)]="isCollapsed"><!-- COLLAPSE CON TABELLA DEGLI EPISODI -->
+    <div class="card">
+        <div class="card-header">
+
+            <div class="scelta">
+                <div ngbDropdown class="d-inline-block dd">
+                    <button type="button" id="scelta" ngbDropdownToggle>
+                        Stagioni
+                    </button>
+                    <div ngbDropdownMenu aria-labelledby="scelta" class="dd_list">
+                        <button *ngFor="let n of n_stagioni" ngbDropdownItem (click)="caricaStagione(n)"
+                            class="btn_scelta">Stagione {{n}}</button>
+                    </div>
+                </div>
+            </div>
+
+            <button class="add button_gest" (click)="open(episodio);resetEpisodio();setFormEpisodi('add')"><i
+                    class="bi bi-plus-square-fill me-1"></i>
+                AGGIUNGI</button>
+        </div>
+        <div class="card-body">
+            <table class="table table-episodi" *ngIf="serieSelezionata !== null">
+                <thead>
+                    <tr>
+                        <th scope="col" class="id_ep">ID</th>
+                        <th scope="col">Titolo</th>
+                        <th scope="col">Stagione</th>
+                        <th scope="col">Numero ep.</th>
+                        <th scope="col" class="locandina_ep">Locandina</th>
+                        <th></th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let ep of arr_episodi">
+                        <td class="id_ep">{{ep.idEpisodio}}</td>
+                        <td>{{ep.titolo}}</td>
+                        <td>{{ep.stagione}}</td>
+                        <td>{{ep.numero}}</td>
+                        <td class="locandina_ep"><img [src]="ep.path_img" [alt]="ep.titolo" class="img_loc"></td>
+                        <td scope="row">
+                            <button class="elimina button_gest" (click)="open(eliminazione)">Elimina <i
+                                    class="bi bi-trash3-fill"></i></button>
+                        </td>
+                        <td>
+                            <button class="modifica button_gest"
+                                (click)="inserimentoEpisodiDaModificare(ep.idEpisodio.toString());open(episodio);setFormEpisodi('mod')">
+                                Modifica<i class="bi bi-brush-fill"></i></button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<ng-template let-modal #episodio><!-- MODAL PER FORM SUGLI EPISODI-->
+    <div class="modal-header">
+        <span class="text-white">{{serieSelezionata?.titolo}}: Aggiungi un episodio</span>
+    </div>
+    <div class="modal-body">
+        <form class="form_gestione" [formGroup]="form_ep" #formEp>
+            <div class="row g-2 mb-3 p-3 mx-1"><!--#### TITOLO ##########-->
+                <div class="col"><!-- #####  TITOLO  ########-->
+                    <label class="form-label" for="titolo" [class.is-invalid]="form_ep.get('titolo')?.invalid &&
+                    (form_ep.get('titolo')?.touched)">titolo</label>
+                    <input class="form-control" type="text" formControlName="titolo" id="titolo" [class.is-invalid]="form_ep.get('titolo')?.invalid &&
+                    (form_ep.get('titolo')?.touched)">
+                </div>
+            </div>
+
+            <div class="row g-2 mb-3 p-3 mx-1"><!--#### TITOLO ##########-->
+                <div class="col"><!-- #####  TITOLO  ########-->
+                    <label class="form-label" for="numero" [class.is-invalid]="form_ep.get('numero')?.invalid &&
+                    (form_ep.get('numero')?.touched)">Numero</label>
+                    <input class="form-control" type="text" formControlName="numero" id="numero" [class.is-invalid]="form_ep.get('numero')?.invalid &&
+                    (form_ep.get('numero')?.touched)">
+                </div>
+            </div>
+
+            <div class="row g-2 mb-3 p-3 mx-1"><!-- NUMERO, DURATA E STAGIONE-->
+                <div class="col col-md-4"><!-- #####  STAGIONE  ########-->
+                    <label class="form-label" for="stagione" [class.is-invalid]="form_ep.get('stagione')?.invalid &&
+                    ( form_ep.get('stagione')?.touched)">stagione</label>
+                    <input class="form-control" type="text" formControlName="stagione" id="stagione" [class.is-invalid]="form_ep.get('stagione')?.invalid &&
+                    ( form_ep.get('stagione')?.touched)">
+                </div>
+                <div class="col col-md-4"><!-- #####  NUMERO EPISODIO  ########-->
+                    <label class="form-label" for="voto" [class.is-invalid]="form_ep.get('voto')?.invalid &&
+                    ( form_ep.get('voto')?.touched)">Voto</label>
+                    <input class="form-control" type="text" formControlName="voto" id="voto" [class.is-invalid]="form_ep.get('voto')?.invalid &&
+                    ( form_ep.get('voto')?.touched)">
+                </div>
+                <div class="col col-md-4"><!-- #####  DURATA  ########-->
+                    <label class="form-label" for="durata" [class.is-invalid]="form_ep.get('durata')?.invalid &&
+                    ( form_ep.get('durata')?.touched)">Durata</label>
+                    <input class="form-control" type="text" formControlName="durata" id="durata" [class.is-invalid]="form_ep.get('durata')?.invalid &&
+                    ( form_ep.get('durata')?.touched)">
+                </div>
+            </div>
+
+
+
+            <div class="row g-2 mb-3 p-3 mx-1 "><!--####  TEXT AREA PER LA TRAMA -->
+                <div class="col"><!-- #####  TRAMA  ########-->
+                    <label class="form-label" for="trama" [class.is-invalid]="form_serie.get('trama')?.invalid &&
+                    (form_serie.get('trama')?.touched)">Incipit</label>
+                    <textarea class="form-control" type="text" formControlName="trama" id="trama" rows="3"
+                        role="textbox" [class.is-invalid]="form_serie.get('trama')?.invalid &&
+                    (form_serie.get('trama')?.touched)">
+                    </textarea>
+                </div>
+            </div>
+
+            <div class="row g-2 mb-3 p-3 mx-1"><!--####  IMG  ##########-->
+                <div class="col"><!-- #####  IMG  ########-->
+                    <label class="form-label" for="img" [class.is-invalid]="form_ep.get('img')?.invalid &&
+                    (form_ep.get('img')?.touched)">Locandina</label>
+                    <input class="form-control" type="file" formControlName="img" id="locandina" [class.is-invalid]="form_ep.get('img')?.invalid &&
+                    (form_ep.get('img')?.touched)" (change)="postImg($event)">
+                    <!-- In caso di modifica l'input file per la locandina è disabilitato-->
+                </div>
+            </div>
+            <div class="row g-2 mb-3 p-3 mx-1"><!--####  VIDEO  ##########-->
+                <div class="col"><!-- #####  VIDEO  ########-->
+                    <label class="form-label" for="video" [class.is-invalid]="form_serie.get('video')?.invalid &&
+                    ( form_serie.get('video')?.touched)">Video</label>
+                    <input class="form-control" type="file" formControlName="video" accept="video" id="locandina"
+                        [class.is-invalid]="form_serie.get('video')?.invalid &&
+                    ( form_serie.get('video')?.touched)" (change)="postVideo($event)">
+                </div>
+            </div>
+
+            <div class="btn-container">
+                <button class="annulla conferma_butt" (click)="modal.close('Click click');">
+                    ANNULLA
+                </button>
+                <button class="add conferma_butt" *ngIf="n_form_episodio === 1"
+                    (click)="AggiungiOnClickEpisodi();modal.close('Save click');" [disabled]="form_ep.invalid"
+                    [ngClass]="form_ep.invalid ? 'disabled-add' : ''">
+                    AGGIUNGI <i class="bi bi-plus-square-fill"></i>
+                </button>
+                <button class="modifica conferma_butt" type="submit"
+                    (click)="ModificaOnClickEpisodi(idEpisodio);modal.close()" *ngIf="n_form_episodio === 2">
+                    MODIFICA <i class="bi bi-brush-fill"></i>
+                </button>
+            </div>
+        </form>
+    </div>
+
+</ng-template>

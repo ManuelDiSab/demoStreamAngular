@@ -1,0 +1,137 @@
+<!-- MENU PER QUANDO SI E' FATTO IL LOGIN ALL'INTERNO DELLA PIATTAFORMA -->
+
+
+<!-- ##############  MENU LATERALE (SCHERMI DI ALMENO 769PX)  ########################################-->
+<div class="sidenav" *ngIf="(auth | async)?.token !== null && (auth |async)?.token !== ''"
+
+    [ngClass]="isLeftSidebarCollapsed ? 'sidenav-collapsed' : '' ">
+    <div class="logo-container">
+        <button class="logo" (click)="toggleCollapse()" *ngIf="isLeftSidebarCollapsed">
+            <!-- <i class="bi bi-list i-toggle"></i> -->
+            <img [src]="logo_piccolo" class="i-toggle" width="auto" height="30">
+        </button>
+        <button class="logo" (click)="toggleCollapse()" *ngIf="!isLeftSidebarCollapsed">
+            <img [src]="logo" class="i-toggle" width="auto" height="30">
+        </button>
+    </div>
+    <ng-template #content let-modal id="modal">
+        <div class="modal-body">
+            <form [formGroup]="form_ricerca" (submit)="onSubmit();modal.close()" class="form_ricerca">
+                <input type="input" autocomplete="off" formControlName="valore_ricerca" id="searchBar"
+                    class="form-control" #input (input)="ricercaProdotti()" list="ciao">
+                <div id="risultati_ricerca">
+                    <ul id="contRicerca">
+                        <li *ngFor="let item of arr_film">
+                            <a href="javascript:void(0)" class="prodotti"
+                                [routerLink]="'film/'+item.titolo">{{item.titolo}}</a>
+                        </li>
+                        <li *ngFor="let item of arr_serie">
+                            <a href="javascript:void(0)" class="prodotti"
+                                [routerLink]="'serie/'+item.idSerie">{{item.titolo}}</a>
+                        </li>
+                    </ul>
+                </div>
+            </form>
+
+        </div>
+    </ng-template>
+    <div class="sidenav-nav">
+
+        <li class="sidenav-nav-item">
+            <a class="sidenav-nav-search" (click)="open(content)">
+                <i class="sidenav-link-icon bi bi-search"></i>
+                <span *ngIf="!isLeftSidebarCollapsed" class="sidenav-link-text">search</span>
+            </a>
+        </li>
+        <li *ngFor="let item of arr_obj" class="sidenav-nav-item">
+            <a class="sidenav-nav-link" href="javascript:void(0)" [routerLink]="item.route" routerLinkActive="active"
+                [routerLinkActiveOptions]="{exact:true}">
+                <i class="sidenav-link-icon" [class]="item.icon"></i>
+                <span *ngIf="!isLeftSidebarCollapsed" class="sidenav-link-text">{{item.label}}</span>
+            </a>
+        </li>
+        <li *ngIf="(auth | async)?.idRuolo === 2" class="sidenav-nav-item">
+            <a class="sidenav-nav-link" href="javascript:void(0)" [routerLink]="obj_admin.route"
+                routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">
+                <i class="sidenav-link-icon" [class]="obj_admin.icon"></i>
+                <span *ngIf="!isLeftSidebarCollapsed" class="sidenav-link-text">{{obj_admin.label}}</span>
+            </a>
+        </li>
+        <li class="sidenav-nav-item esci">
+            <a class="sidenav-nav-link" href="javascript:void(0)" [routerLink]="'/login'" routerLinkActive="active"
+                (click)="logout()">
+                <i class="bi bi-box-arrow-right sidenav-link-icon"></i>
+                <span *ngIf="!isLeftSidebarCollapsed" class="sidenav-link-text">Esci</span>
+            </a>
+        </li>
+    </div>
+</div>
+
+
+
+
+
+<!-- ##############  MENU PER SCHERMI LARGHI MASSIMO 768PX ########################################-->
+<nav class="navbar navbar-expand-lg schermo-piccolo" id="token_si" *ngIf="(auth | async)?.token !== null && (auth |async)?.token !== ''"><!-- Inizio della navbar -->
+    <div class="container-fluid">
+        <button class="navbar-brand navbar-dark navbar-toggler" type="button" data-bs-toggle="offcanvas"
+            data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar" aria-label="Toggle navigation"><!--button per aprire il menu-->
+            <span class="navbar-toggler-icon" id="off_button"></span>
+        </button>
+        <a class="" href="javascript:void(0)" [routerLink]="'/homepage'" ><!-- Anchor per la homepage-->
+            <img [src]="logo" alt="logo" width="200" id="logo"></a><!-- logo che funziona anche da pulsante home-->
+        <div class="offcanvas offcanvas-start bg-dark " tabindex="-1" id="offcanvasNavbar"
+            aria-labelledby="offcanvasNavbarLabel"><!-- Menu offcavas-->
+            <div class="offcanvas-body">
+                <ul class="navbar-nav" id="ul_menu"><!--lista contenente le voci del menu-->
+                    <li class="nav-item px-3" *ngFor="let item of arr_obj;">
+                        <a class="nav-link voci" href="javascript:void(0)" [routerLink]="item.route">
+                            <i [class]="item.icon"></i>
+                            {{ item.label }}</a>
+                    </li>
+                    <li class="nav-item px-3" *ngIf="(auth | async)?.idRuolo === 2">
+                        <a class="nav-link voci" href="javascript:void(0)" [routerLink]="obj_admin.route">
+                            <i [class]="obj_admin.icon"></i>
+                            {{ obj_admin.label }}</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <ul       id="ul_profilo"><!-- Pulsante per la ricerca dei titoli e pulsante dropdwon per il profilo-->
+            <li class="nav-item" (click)="open(content)">
+                <i class="text-white bi bi-search"></i>
+                <span class="sidenav-link-text"></span>
+            </li>
+            <ng-template #content let-modal id="modal"><!-- Modal per la ricerca dei titoli-->
+                <div class="modal-body">
+                    <form [formGroup]="form_ricerca" (submit)="onSubmit();modal.close()" class="form_ricerca">
+                        <input type="input" autocomplete="off" formControlName="valore_ricerca" id="searchBar"
+                            class="form-control" #input (input)="ricercaProdotti()" list="ciao">
+                        <div id="risultati_ricerca"><!-- Contenitore per disporre i titoli che corrispondono alla ricerca-->
+                            <ul id="contRicerca">   
+                                <li *ngFor="let item of arr_film"><!-- display dei titoli dei film -->
+                                    <a href="javascript:void(0)" class="prodotti"
+                                        [routerLink]="'film/'+item.titolo">{{item.titolo}}</a>
+                                </li>
+                                <li *ngFor="let item of arr_serie"><!-- Display dei titoli delle serie -->
+                                    <a href="javascript:void(0)" class="prodotti"
+                                        [routerLink]="'serie/'+item.idSerie">{{item.titolo}}</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </form>
+                </div>
+            </ng-template><!-- Fine modal per la ricerca-->
+            <li class="nav-item" ngbDropdown display="dynamic" placement="bottom-end"><!--  Inizio Pulsante profilo -->
+                <button class="nav-link text-white  p-0" id="profilo" type="button" title="Profile" ngbDropdownToggle>
+                    <i class="bi bi-person-circle"></i>
+                </button>
+                <div ngbDropdownMenu aria-labelledby="navbarDropdown3" class="dropdown-menu"><!-- Dropdown menu con voci del profilo e logout-->
+                    <a href="javascript:void(0)" [routerLink]="['/mio-profilo']" class="dropdown-item" ngbDropdownItem
+                        title="Vai al mio account">Il mio account</a>
+                    <a ngbDropdownItem href="javascript:void0()"  (click)="logout()">Logout</a>
+                </div>
+            </li><!-- Fine pulsante profilo-->
+        </ul>
+    </div>
+</nav><!-- Fine della navbar -->

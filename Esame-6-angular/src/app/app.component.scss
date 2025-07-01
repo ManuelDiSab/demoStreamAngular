@@ -1,0 +1,45 @@
+main {
+    background-color: #000000;
+    min-height: 100vh;
+    .body{
+        width: calc(100% - 5rem);
+        margin-left: 5rem;
+        z-index: 0;
+        position: relative;
+        top: 0;
+        transition: all 0.5s ease;
+        padding: 0;
+        min-height: 100vh;
+        background-color: black;
+    }
+
+    .body-trimmed {
+        width: calc(100% - 16.5625rem);
+        margin-left: 16.5625rem;
+    }
+    .body-md-screen {
+        width: calc(100% - 5rem);
+        margin-left: 5rem;
+        @media (max-width: 769px) {
+            margin: 0;
+            width: 100%;
+        }
+    }
+}
+footer {
+    background-color: black;
+    .body-trimmed {
+        width: calc(100% - 16.5625rem);
+        margin-left: 16.5625rem;
+    }
+
+    .body-md-screen {
+        width: calc(100% - 5rem);
+        margin-left: 5rem;
+
+        @media (max-width: 769px) {
+            margin: 0;
+            width: 100%;
+        }
+    }
+}

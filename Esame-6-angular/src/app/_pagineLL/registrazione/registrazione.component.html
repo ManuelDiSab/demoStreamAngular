@@ -1,0 +1,369 @@
+<section>
+    <!-- #############  PRIMO FORM  ######################################## -->
+    <ng-container *ngIf="bottone == 1">
+        <div class="row col-12 col-md-8 mx-auto pt-5 form-container ">
+            <form class="p-4" [formGroup]="reactiveForm" (submit)="avanti()">
+                <h1 class="text-white slogan text-center">Scatena l'intrattenimento, sempre e ovunque!</h1>
+                <!-- slogan -->
+                <h3 class="text-center text-white ">Inserisci la tua e-mail per iniziare o riattivare il tuo account!
+                </h3>
+                <div class="mb-3 gy-1 primo-form container-fluid">
+                    <input type="email" class="form-control mx-3 text-white" id="Inputemail" formControlName="utente"
+                        [class.is-invalid]="reactiveForm.get('utente')?.invalid &&
+                    (reactiveForm.get('utente')?.touched)" name="utente">
+                    <button type="button" class="btn avanti text-white" (click)="avanti()"
+                        [disabled]="!reactiveForm.valid">Avanti</button>
+                </div>
+                <div class="text-danger text-center"><!--  Contenitore dei messaggi di validazione (utente)-->
+                    <span
+                        *ngIf="reactiveForm.get('utente')?.hasError('utente') && (reactiveForm.get('utente')?.dirty || reactiveForm.get('utente')?.touched)">
+                        Il testo inserito deve essere del formato utente</span>
+                    <span
+                        *ngIf="reactiveForm.get('utente')?.hasError('required') && (reactiveForm.get('utente')?.dirty || reactiveForm.get('utente')?.touched)">
+                        Inserisci un email valida</span>
+                </div>
+            </form>
+        </div>
+    </ng-container>
+
+    <!-- #############  SECONDO FORM  ######################################## -->
+    <ng-container *ngIf="bottone == 2 ">
+        <div class="row col-12 col-md-8 mx-auto pt-5 form-container ">
+            <form class="p-5" [formGroup]="reactiveForm2" (submit)="avanti()">
+                <!-- for  ->
+                <h1 class="text-white text-center">Inserisci i tuoi dati</h1><!--slogan-->
+                <div class="row g-2 mb-3 "><!-- Nome e cognome-->
+                    <div class="col-12"><!-- Input del nome -->
+                        <label for="nome" class="form-label text-white" id="lb_nome" [class.is-invalid]="reactiveForm2.get('nome')?.invalid &&
+                            (reactiveForm2.get('nome')?.touched)">nome<span>*</span></label>
+                        <input type="text" class="form-control text-white" id="nome" formControlName="nome" #nome
+                            [class.is-invalid]="reactiveForm2.get('nome')?.invalid &&
+                            (reactiveForm2.get('nome')?.touched)">
+                        <div class="text-center"><!--  Contenitore dei messaggi di validazione (nome)-->
+                            <span class="is-invalid"
+                                *ngIf="reactiveForm2.get('nome')?.hasError('minlength') && ( reactiveForm2.get('nome')?.touched)">
+                                Il valore inserito deve avere almeno due caratteri</span>
+                            <span class="is-invalid"
+                                *ngIf="reactiveForm2.get('nome')?.hasError('required') && (reactiveForm2.get('nome')?.touched)">
+                                Il campo "nome" è obbligatorio</span>
+                            <span class="is-invalid"
+                                *ngIf="reactiveForm2.get('nome')?.hasError('maxlength') && (reactiveForm2.get('nome')?.touched)">
+                                Il valore inserito può avere al massimo 15 caratteri</span>
+                        </div>
+                    </div>
+                    <div class="col-12 "><!-- Input del cognome -->
+                        <label for="cognome" class="form-label text-white" id="lb_cognome" [class.is-invalid]="reactiveForm2.get('cognome')?.invalid &&
+                            (reactiveForm2.get('cognome')?.touched)">
+                            cognome<span>*</span></label>
+                        <input type="text" class="form-control text-white" formControlName="cognome" id="cognome"
+                            #cognome [class.is-invalid]="reactiveForm2.get('cognome')?.invalid &&
+                            (reactiveForm2.get('cognome')?.touched)">
+                        <div class="text-center"><!--  Contenitore dei messaggi di validazione (cognome)-->
+                            <span class="is-invalid"
+                                *ngIf="reactiveForm2.get('cognome')?.hasError('minlength') && (reactiveForm2.get('cognome')?.touched)">
+                                Il valore inserito deve avere almeno due caratteri</span>
+                            <span class="is-invalid"
+                                *ngIf="reactiveForm2.get('cognome')?.hasError('required') && (reactiveForm2.get('cognome')?.touched)">
+                                Il campo "cognome" è obbligatorio</span>
+                            <span class="is-invalid"
+                                *ngIf="reactiveForm2.get('cognome')?.hasError('maxlength') && (reactiveForm2.get('cognome')?.touched)">
+                                Il valore inserito può avere al massimo 15 caratteri</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="row g-3 mb-3 "><!-- data di nascita e sesso-->
+                    <div class="col-lg-6"><!-- Scelta data di nascita -->
+                        <label for="dataNascita" class="form-label text-white" id="lb_dataNascita" [class.is-invalid]="reactiveForm2.get('data')?.invalid &&
+                            (reactiveForm2.get('data')?.touched)">
+                            Data di nascita<span>*</span></label>
+                        <div class=" input-group">
+                            <input class="form-control text-white" placeholder="yyyy-mm-dd" name="dataNascita"
+                                [minDate]="{ year: 1990, month: 1, day: 1}   " id="dataNascita" ngbDatepicker
+                                #d="ngbDatepicker" ngb formControlName="data" #data [class.is-invalid]="reactiveForm2.get('data')?.invalid &&
+                            (reactiveForm2.get('data')?.touched)" />
+                            <button class="btn  bi bi-calendar3 text-white border border-rounded" (click)="d.toggle()"
+                                type="button" id="dateP" [class.is-invalid]="reactiveForm2.get('data')?.invalid &&
+                            (reactiveForm2.get('data')?.touched)"></button>
+                        </div>
+                    </div>
+                    <div class="col-lg-6"><!--Scelta del proprio sesso-->
+                        <label for="scelta_sesso" class="form-label text-white" [class.is-invalid]="reactiveForm2.get('sesso')?.invalid &&
+                            (reactiveForm2.get('sesso')?.touched)" id="lb_sesso">Sesso<span>*</span></label>
+                        <select class="form-select  text-white" aria-label="Default select example" id="scelta_sesso"
+                            #sesso formControlName="sesso" [class.is-invalid]="reactiveForm2.get('sesso')?.invalid &&
+                            (reactiveForm2.get('sesso')?.touched)">
+                            <option [value]="1" class="male" >Maschio</option>
+                            <option [value]="0" class="female">Femmina</option>
+                        </select>
+                        <div class="text-center"><!--  Contenitore dei messaggi di validazione (sesso)-->
+                            <span class="is-invalid"
+                                *ngIf="reactiveForm2.get('sesso')?.hasError('required') && (reactiveForm2.get('sesso')?.touched)">
+                                Campo obbligatorio</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row g-2 mb-3 "><!-- Input del comune di nascita-->
+                    <div class="col-lg-8">
+
+                        <label for="comuneNascita" class="form-label text-white" id="lb_comuneNascita"
+                            [class.is-invalid]="reactiveForm2.get('comuneNascita')?.invalid
+                        && ( reactiveForm2.get('comuneNascita')?.touched)">
+                            Città di nascita<span>*</span></label>
+                        <ng-select class="custom" id="comuneNascita" #comuneNascita formControlName="comuneNascita"
+                            (search)="listacomuni(comuneNascita.searchTerm)" [(ngModel)]="comune_selected"
+                            (change)="cambioComune()"
+                            [class.ng-invalid]="reactiveForm2.get('comuneNascita')?.invalid && ( reactiveForm2.get('comuneNascita')?.touched)">
+                            <ng-option *ngFor="let item of arr_comuni" [value]="item">{{item.nome}}</ng-option>
+                        </ng-select>
+                    </div>
+                    <div class="col-lg-4"><!-- Input della provincia -->
+                        <label for="provincia" class="form-label text-white" [class.is-invalid]="reactiveForm2.get('provincia')?.invalid
+                             && (reactiveForm2.get('provincia')?.touched)"
+                            id="lb_provincia">Provincia<span>*</span></label>
+                        <select class="form-select form-control text-white" id="provincia" formControlName="provincia"
+                            [(ngModel)]="siglaAuto" #provincia [class.is-invalid]="reactiveForm2.get('provincia')?.invalid 
+                             && (reactiveForm2.get('provincia')?.touched)">
+                            <option *ngFor="let item of province" value="{{item}}">{{item}}
+                        </select>
+                    </div>
+                    <span
+                        *ngIf="reactiveForm2.get('provincia')?.hasError('required') && (reactiveForm2.get('provincia')?.touched)"
+                        class="is-invalid text-center"> Provincia non valida
+                    </span>
+                    <span
+                        *ngIf="reactiveForm2.get('comuneNascita')?.hasError('required') && ( reactiveForm2.get('comuneNascita')?.touched)"
+                        class="is-invalid text-center"> Comune non valido
+                    </span>
+
+                </div>
+                <div class="mb-3 "><!-- Input del codice fiscale -->
+                    <label for="codFis" class="form-label text-white" id="lb_codFis" [class.is-invalid]="reactiveForm2.get('codFis')?.invalid &&
+                            (reactiveForm2.get('codFis')?.touched)">
+                        Codice fiscale<span>*</span></label>
+                    <div class="input-group">
+                        <input type="text" class="form-control text-white" id="codFis" aria-describedby="codFis"
+                            value="{{cf_value}}" formControlName="codFis" [class.is-invalid]="reactiveForm2.get('codFis')?.invalid &&
+                            (reactiveForm2.get('codFis')?.touched)">
+                        <button class="btn bi bi-person-vcard-fill text-white border border-white" type="button"
+                            id="codFis" [class.is-invalid]="reactiveForm2.get('codFis')?.invalid &&
+                            (reactiveForm2.get('codFis')?.touched)"
+                            (click)="getCod(nome.value, cognome.value ,comune_selected!.nome, data.value, provincia.value, (sesso.value == 'M') ? 'F' : 'M')">
+                        </button>
+                    </div>
+                    <span
+                        *ngIf="reactiveForm2.get('codFis')?.hasError('controlCodFiscale') && (reactiveForm2.get('codFis')?.touched || reactiveForm2.get('codFis')?.dirty)"
+                        class="is-invalid">{{( reactiveForm2.controls['codFis'].getError('controlCodFiscale')| json )}}
+                    </span>
+                </div>
+                <div class="mb-3 p-1 d-flex container-fluid"><!-- button di invio -->
+                    <button type="button" class="btn text-white mx-auto btn_fine_form"
+                        (click)="indietro()">Indietro</button>
+                    <button type="button" class="btn text-white mx-auto btn_fine_form" [disabled]="!reactiveForm2.valid"
+                        (click)="avanti()">Continua</button>
+                </div>
+            </form>
+        </div>
+    </ng-container>
+
+    <!-- #############  TERZO FORM  ######################################## -->
+    <ng-container *ngIf="bottone == 3">
+        <div class="row col-12 col-md-8 mx-auto pt-5 form-container ">
+            <form class="p-5" [formGroup]="reactiveForm3" (submit)="onSubmit()">
+                <!-- for  erza parte) -->
+
+                <div class="mb-3 "><!-- Scelta della nazione -->
+                    <label for="nazione" class="form-label text-white" id="lb_nazione" [class.is-invalid]="reactiveForm3.get('nazione')?.hasError('required') &&
+                         (reactiveForm3.get('nazione')?.touched)">Nazione<span>*</span>
+                    </label>
+
+                    <ng-select class="custom" id="nazione" formControlName="nazione" (change)="cambioNazione()"
+                        [class.is-invalid]="reactiveForm3.get('nazione')?.hasError('required') && (reactiveForm3.get('nazione')?.touched)">
+                        <ng-option *ngFor="let nazione of arr_nazioni" [value]="nazione">{{nazione.nome}}</ng-option>
+                    </ng-select>
+
+                    <div class="text-center"><!--  Contenitore dei messaggi di validazione (nazione)-->
+                        <span class="is-invalid"
+                            *ngIf="reactiveForm3.get('nazione')?.hasError('required') && (reactiveForm3.get('nazione')?.touched)">
+                            Nazione non valida</span>
+                    </div>
+                </div><!-- Fine scelta nazione-->
+
+
+                <div class="mb-3"><!--input del telefono-->
+
+                    <label for="tel" class="form-label text-white"
+                        [class.is-invalid]="reactiveForm3.get('tel')?.invalid && (reactiveForm3.get('tel')?.touched)"
+                        id="lb_tel">Telefono<span>*</span>
+                    </label>
+                    <div class="input-group">
+                        <input class="input-group-text" id="prefisso" [value]="nazione_selected"
+                            [class.is-invalid]="reactiveForm3.get('tel')?.invalid && (reactiveForm3.get('tel')?.touched)">
+                        <input type="tel" class="form-control text-white" #select id="tel" formControlName="tel"
+                            [class.is-invalid]="reactiveForm3.get('tel')?.invalid && (reactiveForm3.get('tel')?.touched)">
+                    </div>
+
+                    <div class="text-center"><!--  Contenitore dei messaggi di validazione (telefono)-->
+                        <span class="is-invalid"
+                            *ngIf="reactiveForm3.get('tel')?.hasError('required') && (reactiveForm3.get('tel')?.touched)">
+                            Numero di telefono obbligatorio</span>
+                        <span class="is-invalid"
+                            *ngIf="reactiveForm3.get('tel')?.hasError('pattern') && (reactiveForm3.get('tel')?.touched)">
+                            Il campo "telefono" DEVE essere un numero</span>
+                        <span class="is-invalid"
+                            *ngIf="reactiveForm3.get('tel')?.hasError('minlength') && (reactiveForm3.get('tel')?.touched)">
+                            Il campo "telefono" deve avere almeno 8 numeri</span>
+                        <span class="is-invalid "
+                            *ngIf="reactiveForm3.get('tel')?.hasError('maxlength') && (reactiveForm3.get('tel')?.touched)">
+                            Il campo "telefono" deve avere massimo 12 numeri</span>
+                    </div>
+                </div><!-- fine input del telefono-->
+
+                <div class="row g-2 mb-3 "><!-- input di comune residenza e cap del comune-->
+
+                    <div class="col-lg-9"><!-- Input della comune di residenza -->
+                        <label for="comune" class="form-label text-white" id="lb_comune"
+                            [class.is-invalid]="reactiveForm3.get('comune')?.invalid && (reactiveForm3.get('comune')?.touched)">
+                            Città di residenza<span>*</span></label>
+                        <ng-select class="custom" #comune formControlName="comune"
+                            (search)="listacomuni2(comune.searchTerm)" [(ngModel)]="comune_selected2"
+                            (change)="cambioComune2()"
+                            [class.ng-invalid]="reactiveForm2.get('comune')?.invalid && (reactiveForm2.get('comune')?.touched)">
+                            <ng-option *ngFor="let item of arr_comuni2" [value]="item">{{item.nome}}</ng-option>
+                        </ng-select>
+                        <div class="text-center"><!--  Contenitore dei messaggi di validazione (email)-->
+                            <span class="is-invalid"
+                                *ngIf="reactiveForm3.get('comune')?.hasError('required') && (reactiveForm3.get('comune')?.touched)">
+                                Il campo "città" è obbligatorio</span>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-3"><!-- Input del cap -->
+                <label for="cap" class="form-label text-white" [class.is-invalid]="reactiveForm3   .get('cap')?.invalid &&
+                            (reactiveForm3  .get('cap')?.dirty || reactiveForm3   .get('cap')?.touched)">Cap</label>
+                <!-- <input type="text" class="form-control" id="cap" formControlName="cap" [class.is-invalid]="reactiveForm3   .get('cap')?.invalid &&
+                            (reactiveForm3  .get('cap')?.dirty || reactiveForm3   .get('cap')?.touched)"> -->
+                <ng-select class="custom" formControlName="cap" [class.is-invalid]="reactiveForm3   .get('cap')?.invalid &&
+                            (reactiveForm3  .get('cap')?.dirty || reactiveForm3   .get('cap')?.touched)">
+                    <ng-option id="multicap" [value]="cap" *ngFor="let cap of arr_cap">{{cap}}</ng-option>
+                </ng-select>
+                    </div>
+                </div>
+
+
+
+                <div class="row g-2 mb-3 "><!-- Input dell'indirizzo e del numero civico-->
+                    <div class="col-lg-10"><!-- Input dell' indirizzo -->
+                        <label for="indirizzo" class="form-label text-white"
+                            [class.is-invalid]="reactiveForm3.get('indirizzo')?.invalid && (reactiveForm3.get('indirizzo')?.touched)"
+                            id="lb_indirizzo">Indirizzo<span>*</span></label>
+                        <input type="text" class="form-control text-white" id="indirizzo" formControlName="indirizzo"
+                            #indirizzo
+                            [class.is-invalid]="reactiveForm3.get('indirizzo')?.invalid && (reactiveForm3.get('indirizzo')?.touched)">
+                        <div class="text-center"><!--  Contenitore dei messaggi di validazione (indirzzo)-->
+                            <span class="is-invalid"
+                                *ngIf="reactiveForm3.get('indirizzo')?.hasError('required') && (reactiveForm3.get('indirizzo')?.touched)">
+                                Il campo "indirizzo" è obbligatorio </span>
+                            <span class="is-invalid"
+                                *ngIf="reactiveForm3.get('indirizzo')?.hasError('minlength') && (reactiveForm3.get('indirizzo')?.touched)">
+                                Il campo "indirizzo" deve avere almeno 5 caratteri</span>
+                            <div class="text-center"><!--  Contenitore dei messaggi di validazione  (civico)-->
+                                <span class="is-invalid"
+                                    *ngIf="reactiveForm3.get('civico')?.hasError('required') && (reactiveForm3.get('civico')?.touched)">
+                                    Il campo "civico" è obbligatorio</span>
+                                <span class="is-invalid"
+                                    *ngIf="reactiveForm3.get('civico')?.hasError('maxlength') && (reactiveForm3.get('civico')?.touched)">
+                                    Il campo "civico" deve avere massimo 5 caratteri</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-2"><!-- Input del civico -->
+                        <label for="civico" class="form-label text-white" id="lb_civico"
+                            [class.is-invalid]="reactiveForm3.get('civico')?.invalid && (reactiveForm3.get('civico')?.touched)">Civico<span>*</span></label>
+                        <input type="text" class="form-control text-white" formControlName="civico" id="civico" #civico
+                            [class.is-invalid]="reactiveForm3.get('civico')?.invalid && (reactiveForm3.get('civico')?.touched)">
+                    </div>
+                </div>
+
+                <div class="mb-3 "><!-- Scelta della tipologiaIndirizzo -->
+                    <label for="tipologiaIndirizzo" class="form-label text-white" id="lb_tipologiaIndirizzo"
+                        [class.is-invalid]="reactiveForm3.get('tipologiaIndirizzo')?.hasError('required') && (reactiveForm3.get('tipologiaIndirizzo')?.touched)">Tipologia
+                        indirizzo<span>*</span></label>
+                    <select class="form-control form-select text-white" id="tipologiaIndirizzo"
+                        formControlName="tipologiaIndirizzo" #tipologiaIndirizzo
+                        [class.is-invalid]="reactiveForm3.get('tipologiaIndirizzo')?.hasError('required') && (reactiveForm3.get('tipologiaIndirizzo')?.touched)">
+                        <option [value]="1" selected>Residenza</option>
+                        <option [value]="2">Ufficio</option>
+                    </select>
+
+                    <div class="text-center"><!--  Contenitore dei messaggi di validazione (email)-->
+                        <span class="is-invalid"
+                            *ngIf="reactiveForm3.get('tipologiaIndirizzo')?.hasError('required') && (reactiveForm3.get('tipologiaIndirizzo')?.touched)">
+                            Il campo "tipologia indirizzo" è obbligatorio</span>
+                    </div>
+                </div>
+
+
+
+                <div class="mb-3 "><!-- Inserimento della password-->
+                    <label for="password" class="form-label text-white" id="lb_password"
+                        [class.is-invalid]="reactiveForm3.get('password')?.invalid && (reactiveForm3.get('password')?.touched)">
+                        Password<span>*</span></label>
+                    <div class="input-group">
+                        <input type="password" class="form-control text-white" id="password" formControlName="password"
+                            [class.is-invalid]="reactiveForm3.get('password')?.invalid && (reactiveForm3.get('password')?.touched)"
+                            #password>
+                        <button class="btn  bi {{eye_icon}} text-white border border-white" type="button"
+                            [class.is-invalid]="reactiveForm3.get('password')?.invalid && (reactiveForm3.get('password')?.touched)"
+                            (click)="vedoNonVedo(password)"></button>
+                    </div>
+                    <div class="text-center"><!--  Contenitore dei messaggi di validazione (email)-->
+                        <span *ngIf="reactiveForm3.get('password')?.untouched" class="text-white">
+                            La password deve contenere una lettera maiuscola, una minuscola, un carattere speciale,
+                            un numero ed avere una lunghezza di minimo 8 caratteri</span>
+                        <span class="is-invalid"
+                            *ngIf="reactiveForm3.get('password')?.hasError('required') && (reactiveForm3.get('password')?.touched)">
+                            Il campo "password" è obbligatorio</span>
+                        <span class="is-invalid"
+                            *ngIf="reactiveForm3.get('password')?.hasError('maxlength') && (reactiveForm3.get('password')?.touched)">
+                            Il campo "password" deve avere massimo 5 caratteri</span>
+                    </div>
+                    <div class="text-center">
+                        <span class="is-invalid"
+                            *ngIf="reactiveForm3.get('password')?.hasError('controlloPassword') && (reactiveForm3.get('password')?.touched)">
+                            {{( reactiveForm3.controls['password'].getError('controlloPassword')| json )}}</span>
+                    </div>
+                </div>
+
+
+                <div class="mb-3 "><!-- Conferma della password -->
+                    <label for="password_confirm" class="form-label text-white" id="lb_password_confirm"
+                        [class.is-invalid]="reactiveForm3.get('password_confirmation')?.invalid && (reactiveForm3.get('password_confirmation')?.touched)">
+                        Conferma password<span>*</span></label>
+                    <div class="input-group">
+                        <input type="password" class="form-control text-white" id="password_confirm"
+                            #password_confirmation formControlName="password_confirmation"
+                            [class.is-invalid]="reactiveForm3.get('password_confirmation')?.invalid && (reactiveForm3.get('password_confirmation')?.touched)">
+                        <button class="btn  bi {{eye_icon2}} text-white border border-white" type="button"
+                            [class.is-invalid]="reactiveForm3.get('password_confirmation')?.invalid && (reactiveForm3.get('password_confirmation')?.touched)"
+                            (click)="vedoNonVedo(password_confirmation)"></button>
+                    </div>
+                    <div class="text-center">
+                        <span class="is-invalid"
+                            *ngIf="reactiveForm3.controls['password_confirmation'].hasError('passwordMismatch') && 
+                            (reactiveForm3.get('password_confirmation')?.touched)">
+                            Le due password devono combaciare esattamente!</span>
+                    </div>
+                </div>
+
+
+                <div class="mb-3 p-1 d-flex container-fluid"><!-- button di invio -->
+                    <button type="button" class="btn text-white mx-auto btn_fine_form"
+                        (click)="indietro()">Indietro</button>
+                    <button type="submit" class="btn text-white mx-auto btn_fine_form">Registrati</button>
+                </div>
+            </form>
+        </div>
+
+    </ng-container>
+</section>

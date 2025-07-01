@@ -1,0 +1,15 @@
+<section id="contenuto" class="container-fluid">
+    <ul class="scelta ">
+			<li *ngFor="let item of arr_voci_scelta" class="voci_scelta" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}" [routerLink]="item.url">
+			<a href="javascript:void(0)" >
+				<span class="dentro">{{item.nome}}	</span> <i [class]="item.icona"></i>
+			</a>
+		</li>
+		
+	</ul>
+	<div class="gestioni">
+		<router-outlet></router-outlet>
+	</div>
+</section>
+
+

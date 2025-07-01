@@ -1,0 +1,48 @@
+<section class="container-fluid d-flex bg-image" id="principale" style="background-image:  linear-gradient(to right, rgba(0, 0, 0, 1) 0%,
+            rgba(0, 0, 0, 0) 80%), linear-gradient(to top, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 0) 80%), 
+            url({{risorsa?.path}})">
+    <div class="row w-100 pt-lg-5 d-flex" id="riga">
+
+        <div class="col-lg-7  col-12 mt-5 align-content-end ps-5" id="sinistra">
+            <section class="text-white col-12">
+                <h1 id="titolo">{{risorsa?.titolo}}</h1>
+                <p id="trama">{{risorsa?.trama}}</p>
+            </section>
+            <section class="text-white p-2">
+                <ul class="list-inline">
+                    <li class="list-inline-item pe-1">{{risorsa?.voto}} <i class="bi bi-star-fill"
+                            style="color: yellow;"></i></li>
+                    <li class="list-inline-item pe-1">{{risorsa?.durata}}</li>
+                    <li class="list-inline-item pe-1">{{risorsa?.anno}}</li>
+                    <li class="list-inline-item pe-1"><a href="javascript:void(0)"
+                            class="text-white-50 text-decoration-underline"
+                            [routerLink]="'/genere/'+risorsa?.idGenere">{{risorsa?.genere}}</a></li>
+                    <li class="list-inline-item pe-1"><i class="bi bi-badge-hd"></i></li>
+                </ul>
+            </section>
+            <section class="btn-group p-md-2 d-flex"><!-- Bottoni grandi-->
+                <button class="" id="play" (click)="open(content);setVideo()">Riproduci<i
+                        class="bi bi-play-fill"></i></button>
+                <button class="utility" data-placement="top"
+                    title="Guarda il trailer">
+                    <i class="bi bi-film"></i>
+                </button>
+                <!-- <button *ngIf="risorsa?.preferito" (click)="TogliPreferito(risorsa,i1)" class="utility rounded-circle"><i
+                        class="bi bi-bookmark-fill" #i1></i></button> -->
+                <button (click)="preferiti(risorsa)" class="utility rounded-circle"><i
+                        [class.bi-bookmark-fill]="risorsa?.preferito" class="bi" [class.bi-bookmark]="!risorsa?.preferito"></i></button>
+            </section>
+        </div>
+    </div>
+</section>
+
+<nav-tab [elementi_film]="arr_film" [film]="risorsa!" [generi2]="generi_secondari"></nav-tab>
+
+<ng-template #content let-modal id="modal">
+    <video controls class="video" id="film" #video>
+        <source [src]="risorsa?.video">
+    </video>
+    <div class="sopra">
+        <i class="bi bi-x-lg chiudi" (click)="modal.close()"></i>
+    </div>
+</ng-template>

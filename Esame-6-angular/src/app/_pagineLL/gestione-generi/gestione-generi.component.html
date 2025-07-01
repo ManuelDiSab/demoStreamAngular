@@ -1,0 +1,93 @@
+<div id="alert"></div>
+<form class="form_gestione" [formGroup]="filter_form">
+    <div class="header_form">
+        <h2 class="titolo_form">GENERI</h2>
+        <!-- <input type="text" class="form-control" id="searchBar" formControlName="search" (input)="ricercaGeneri()"> -->
+        <button class="add button_gest" (click)="setForm('add');open(form)">
+            <i class="bi bi-plus-square-fill pe-1"></i> AGGIUNGI</button>
+    </div>
+    <table class="table-striped table"  id="tabella_utenti">
+        <thead>
+            <tr class="text-white ">
+                <th scope="col">ID</th>
+                <th scope="col">Genere</th>
+                <th scope="col"></th>
+                <th scope="col"></th>
+            </tr>
+        </thead>
+        <tbody id="tbody">
+            <tr *ngFor="let gen of generi;">
+                <td>{{gen.idGenere}}</td>
+                <td>{{gen.nome}}</td>
+                <td class="bottoni">
+                    <button class="button_gest elimina" type="button" (click)="open(content)"><i
+                            class="bi bi-trash3-fill"></i> ELIMINA
+                    </button>
+                </td>
+                <td>
+                    <button class="button_gest modifica" type="button"
+                        (click)="open(form);setForm('mod');setGenere(gen.idGenere.toString())"><i
+                            class="bi bi-brush-fill"></i> MODIFICA
+                    </button>
+                </td>
+                <ng-template #content let-modal><!-- modal per l'eliminazione-->
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="modal-title">CONFERMA CAMBIO STATUS</h5>
+                    </div>
+                    <div class="modal-body">
+                        <p class="conferma">Sei sicuro di voler cancellare il genere "{{gen.nome}}" </p>
+                        <div class="btn-container">
+                            <button class="annulla conferma_butt" (click)="modal.close('annulla click')">
+                                ANNULLA
+                            </button>
+                            <button class="elimina conferma_butt" (click)="eliminaGenere(gen.idGenere.toString());modal.close('Click click')" >
+                                ELIMINA <i class="bi bi-trash3-fill"></i>
+                            </button>
+                        </div>
+                    </div>
+                </ng-template>
+            </tr>
+        </tbody>
+        <tfoot>
+            <div class="d-flex p-2 paginazione">
+                <ngb-pagination [collectionSize]="collectionSize" [(page)]="page" [pageSize]="pageSize"
+                    (pageChange)="refreshPaginazione()" class=" pulsanti-paginazione">
+                </ngb-pagination>
+            </div>
+
+        </tfoot>
+    </table>
+</form>
+
+<ng-template #form let-modal>
+    <div class="modal-header">
+        <h5 class="modal-title" id="modal-title">Aggiungi un genere </h5>
+    </div>
+    <div class="modal-body">
+        <form [formGroup]="form_gen" class="form_gen">
+            <div class="row g-2 mb-3 p-3 mx-1"><!-- TITOLO E REGISTA-->
+                <div class="col">
+                    <label for="genere" class="form-label"
+                        [class.is-invalid]="form_gen.get('genere')?.invalid && (form_gen.get('genere')?.dirty || form_gen.get('genere')?.touched)"></label>
+                    <input type="text" class="form-control" formControlName="genere" id="genere"
+                        [class.is-invalid]="form_gen.get('genere')?.invalid &&  (form_gen.get('genere')?.dirty || form_gen.get('genere')?.touched)">
+                </div>
+            </div>
+
+
+            <div class="btn-container">
+                <button class="annulla conferma_butt" (click)="modal.close('Click click');">
+                    ANNULLA
+                </button>
+                <button *ngIf="n_form === 1" (click)="aggiungiGenere();modal.close('Click click')"
+                    class="conferma_butt add">
+                    <i class="bi bi-plus-square-fill"></i> AGGIUNGI
+                </button>
+                <button *ngIf="n_form === 2" (click)="modificaGenere();modal.close('Click click')"
+                    class="conferma_butt modifica">
+                    <i class="bi bi-brush-fill"></i> MODIFICA
+                </button>
+            </div>
+        </form>
+    </div>
+    <ng-template>

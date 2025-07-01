@@ -1,0 +1,163 @@
+* {
+    box-sizing: border-box;
+}
+
+.icon>i {
+    font-size: 20px;
+    color: white;
+    padding: 5px 20px;
+    cursor: pointer;
+}
+
+#principale {
+    background-repeat: no-repeat;
+    background-size: cover;
+    height: 70vh;
+
+    #titolo {
+        font-size: clamp(1.6rem, calc(7vw + 1rem), 3rem);
+    }
+
+    #trama {
+        font-size: 1rem;
+        overflow: hidden;
+        display: -webkit-box;
+        -webkit-line-clamp: 4;
+        line-clamp: 4;
+        -webkit-box-orient: vertical;
+    }
+
+    .list-inline{
+        font-size: 1rem;
+    }
+}
+
+#play {
+    width: 20vw;
+    height: 7vh;
+    text-decoration: none;
+    border-radius: 5px;
+    background: purple;
+    border: 1px solid purple;
+    color: #fff;
+    margin-right: 1rem;
+    font-size: 1rem;
+    font-weight: 500;
+    transition: .3s linear;
+    cursor: pointer;
+    z-index: 999;
+
+    &:hover {
+        border: 2px solid #fff;
+        color: violet;
+        background: #000;
+    }
+}
+
+.utility {
+    width: 4rem;
+    border-radius: 50%;
+    background: purple;
+    border: 2px solid purple;
+    color: #fff;
+    border: none;
+    margin: 0 5px;
+    transition: .4s linear;
+
+    &:hover {
+        border: 2px solid #fff;
+        color: violet;
+        background: #000;
+        transform: scale(1.1);
+    }
+}
+
+.lista {
+    li {
+        display: block;
+    }
+
+}
+
+p {
+    color: rgb(206, 205, 205);
+}
+
+span {
+    color: #fff;
+}
+
+.chiudi {
+    color: #cbcbcb;
+    cursor: pointer;
+    position: absolute;
+    z-index: 9999;
+    right: 30px;
+    top: 30px;
+
+    // display: none;
+    &::before {
+        height: 30px;
+        width: 30px;
+    }
+
+    &:hover {
+        color: #dcd9d9;
+    }
+}
+
+.sopra {
+    display: block;
+    position: absolute;
+    top: 0;
+    right: 0;
+    z-index: 9999;
+    height: 10vh;
+    width: 100%;
+}
+
+.video {
+    height: 100vh;
+    object-fit: fill;
+}
+
+@media (max-width:768px){
+    #trama{
+        display: none !important;
+    }
+    #play{
+        height: 5vh;
+    }
+}
+@media screen and (max-width: 426px) {
+    #principale {
+        background-size: contain !important;
+        height: 50vh !important;
+        // #titolo {
+        //     font-size: 5vw;
+        // }
+        .utility {
+            width: 10vw !important;
+        }
+    }
+}
+@media screen and (max-width: 1024px) {
+    #principale {
+        background-size: cover;
+        height: 70vh !important;
+        #play{
+            width: 50vw;
+            height: 7vh;
+        }
+        .utility{
+            width: 7vw;
+        }
+        #trama {
+            overflow: hidden;
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            line-clamp: 3;
+            -webkit-box-orient: vertical;
+        }
+    }
+}

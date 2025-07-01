@@ -1,0 +1,274 @@
+ @import '../../../variabili';
+
+ .parziale {
+     display: none;
+ }
+
+ .completa {
+     display: block;
+ }
+
+ .search {
+     background: none;
+     border: none;
+
+     .bi-search {
+         color: #fff;
+     }
+ }
+
+ ::ng-deep .modal-content {
+     height: 0 !important;
+     background-color: transparent;
+ }
+
+ //################################    MODAL BARRA DI RICERCA   #####################################################################
+
+ .modal-body {
+     height: 0px;
+     background-color: transparent !important;
+
+     .form_ricerca {
+         background-color: #101415;
+
+         #searchBar {
+             background-color: $inputBc;
+             color: rgba(255, 255, 255, 0.8);
+         }
+
+         #contRicerca {
+             list-style: none;
+             background-color: #101415;
+             padding: 0;
+
+             li {
+                 width: 100%;
+                 padding: 1em;
+
+                 &:hover {
+                     background-color: #171b1c;
+                 }
+
+                 .prodotti {
+                     text-decoration: none !important;
+                     color: rgba(255, 255, 255, 0.8) !important;
+                 }
+             }
+
+         }
+     }
+ }
+
+ //###################################    NABAR LATERALE PER SCHERMI MEDI E GRANDI ##################################################### 
+ .sidenav {
+     //Nav bar laterale
+     background: #000;
+     transition: all 0.5s ease;
+     position: fixed;
+     z-index: 1;
+     top: 0;
+     width: 16.5625rem;
+     height: 100vh;
+
+     @media (max-width: 769px) {
+         //Tablet
+         display: none;
+     }
+
+     .logo-container {
+         display: flex;
+         align-items: center;
+         padding: 0.938rem 0.938rem 0 0.938rem;
+         width: 100%;
+
+         .logo {
+             background: #000;
+             text-align: center;
+             width: 3rem;
+             min-width: 3rem;
+             border-radius: 0.313rem;
+             padding: 0.313rem;
+             font-size: 24px;
+             font-weight: 900;
+             cursor: pointer;
+             border: none;
+         }
+     }
+
+     .sidenav-nav {
+         list-style: none;
+         padding: 0.938rem;
+         margin: 0;
+         // margin-top: 5rem;
+         display: flex;
+         flex-direction: column;
+         align-items: center;
+         height: calc(100% - 3.65rem);
+         cursor: pointer;
+
+         .sidenav-avatar {
+             .avatar {
+                 vertical-align: middle;
+                 width: 40px;
+                 height: 40px;
+             }
+         }
+
+         .sidenav-nav-item {
+            margin: 1vh;
+             width: 100%;
+             margin-bottom: 0.625rem;
+
+             &:hover {
+                 .sidenav-nav-link {
+                     background-color: $HColor;
+                     color: #000000 !important;
+                     transition: .6s;
+                 }
+             }
+
+             .sidenav-nav-link,
+             .sidenav-nav-search {
+                 display: flex;
+                 align-items: center;
+                 height: 3rem;
+                 color: $HColor;
+                 text-decoration: none;
+                 border-radius: 0.625rem;
+                 transition: all 0.3s ease;
+
+                 .sidenav-link-icon {
+                     font-size: 16px;
+                     width: 2rem;
+                     min-width: 2rem;
+                     text-align: center;
+                     padding: 12px;
+                 }
+
+                 .sidenav-link-text {
+                     margin-left: 1.5rem;
+                 }
+             }
+         }
+
+         .esci {
+             margin-bottom: 0 !important;
+         }
+
+     }
+ }
+
+ .sidenav-collapsed {
+     width: 5rem;
+ }
+
+ .active {
+     background-color: $HColor;
+
+     .sidenav-link-icon,
+     .sidenav-link-text {
+         color: #000;
+     }
+ }
+
+
+
+ //################################ NAVBAR CON MENU AD HAMBURGER  ##################################################################################
+ .navbar {
+     background-color: $NavColor;
+     display: none;
+
+     #ul_profilo {
+         list-style: none;
+     }
+
+     .container-fluid {
+         display: flex;
+         flex-wrap: nowrap;
+         padding: 0;
+         margin: 0;
+         align-items: center;
+
+         .navbar-toggler {
+             border: 0px;
+         }
+     }
+
+     #logo {
+         padding-left: 20px;
+     }
+
+     .voci {
+         //Voci della navabar(homrepage, film, serie tv,  ia lista)
+         color: rgb(166, 8, 166);
+         font-size: large;
+         font-family: sans-serif;
+
+         &:hover {
+             transform: scale(1.1);
+             transition: .6s;
+         }
+
+         &:focus {
+             text-decoration: underline 2px rgb(166, 8, 166);
+             transform: scale(1.1);
+         }
+     }
+
+     @media (max-width: 768px) {
+         display: block;
+
+         img {
+             width: 150px;
+         }
+
+         li {
+             margin: 2vh 0px;
+
+             a {
+                 font-size: x-large;
+
+             }
+         }
+
+
+         .offcanvas {
+             width: 80%;
+         }
+
+         #off_button {
+             color: white !important;
+         }
+
+         #ul_profilo {
+             display: flex;
+             height: 100%;
+             align-items: center;
+             margin-bottom: 0 !important;
+
+             li {
+
+                 //  margin: 0px 10px;
+                 .bi-search {
+                     margin-right: 4vw;
+                 }
+
+                 #profilo{
+                    margin-right: 2vw;
+                 }
+                 a {
+                     font-size: 5vw;
+                 }
+
+                 .dropdown-menu {
+                     background-color: #252525;
+
+                     .dropdown-item {
+                         font-size: 5vw;
+                         color: rgba(255, 255, 255, 0.8);
+                     }
+                 }
+             }
+         }
+     }
+ }

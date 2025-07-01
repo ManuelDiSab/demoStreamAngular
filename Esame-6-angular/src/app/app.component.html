@@ -1,0 +1,18 @@
+<header>
+    <app-menu-alto></app-menu-alto>
+    <app-menu-laterale [isLeftSidebarCollapsed]="isLeftSidebarCollapsed()" 
+        (changeIsLeftSidebarCollapsed)="changeIsleftSidebarCollapsed($event)" ></app-menu-laterale>
+</header>
+
+<main class="pb-5">
+    <div [ngClass]="(auth|async)?.token !== null ? 'body' : 'body'" [ngClass]=" (auth|async)?.token !== null ? sizeClass() : ''">
+        <router-outlet ></router-outlet>
+    </div>
+</main>
+
+
+<footer class="">
+    <div [ngClass]="(auth|async)?.token !== null ? '' : 'body'" [ngClass]=" (auth|async)?.token !== null ? sizeClass() : ''">
+        <app-footer></app-footer>
+    </div>
+</footer>

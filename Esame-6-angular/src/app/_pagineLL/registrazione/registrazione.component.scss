@@ -1,0 +1,200 @@
+@import '../../../variabili';
+
+*::placeholder {
+    color: rgb(255, 255, 255, .5);
+}
+
+section {
+    background-image: linear-gradient(to top, rgba(0, 0, 0, 1) 0%,
+            rgba(0, 0, 0, 0) 100%), linear-gradient(to bottom, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 0) 100%),
+        url(../../../assets/img/1512217.jpg);
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+
+    select {
+        &:hover {
+            cursor: pointer;
+        }
+
+        option {
+            background-color: $inputBc;
+            border: none;
+            cursor: pointer;
+        }
+    }
+
+    .input-group {
+        flex-wrap: nowrap;
+    }
+
+    .input-group-text {
+        width: 15%;
+        padding: 0;
+        margin: 0;
+    }
+
+    button {
+        min-width: none;
+        background-color: $buttonBC;
+
+        &:hover {
+            transition: 0.6s all;
+            // color: $buttonCol;
+            background-color: $buttonHover;
+        }
+    }
+
+    .btn_fine_form {
+        font-size: 1.125rem;
+        width: 40%;
+    }
+
+    input,
+    input:focus,
+    select,
+    select:focus {
+        height: 6vh;
+        background-color: $inputBc;
+    }
+
+    .form-container {
+        width: 60vw;
+    }
+
+    form {
+        width: 100%;
+        border-radius: 25px;
+        background-color: $formBG;
+        border: $formBorder;
+    }
+
+    .primo-form {
+        display: flex;
+    }
+
+    label.is-invalid,
+    input.is-invalid {
+        color: red !important;
+        border-color: red !important;
+    }
+
+    button.is-invalid,
+    select.is-invalid {
+        border-color: red !important;
+    }
+
+    span {
+        font-size: 0.8rem !important;
+    }
+
+    span.is-invalid {
+        color: red !important;
+        border-color: red !important;
+    }
+
+    #prefisso {
+        // prefisso telefonico dell'input del numero di telefono 
+        background-color: rgba(255, 255, 255, .9);
+        color: rgb(0, 0, 0);
+        font-size: 1rem !important;
+        width: 20%;
+    }
+
+    h1 {
+        font-size: 1.8rem;
+        font-weight: 700;
+    }
+
+    h3 {
+        color: rgba(255, 255, 255, .8);
+        font-size: 1rem;
+        font-weight: 400;
+        line-height: 1.5;
+    }
+
+}
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+textarea:-webkit-autofill,
+textarea:-webkit-autofill:hover,
+textarea:-webkit-autofill:focus,
+select:-webkit-autofill,
+select:-webkit-autofill:hover,
+select:-webkit-autofill:focus {
+    //L'autofill ha in automatico il background bianco con colore del testo nero
+    //Lo cambio per renderlo conforme ai colori degli altri input della pagina
+    -webkit-text-fill-color: white;
+    -webkit-box-shadow: 0 0 0px 1000px $inputBc inset;
+    transition: background-color 5000s ease-in-out 0s;
+}
+
+
+@media (max-width:992px) {
+    .primo-form {
+        flex-direction: column;
+        align-items: center;
+
+        .avanti {
+            margin-top: 1rem;
+        }
+    }
+}
+
+@media(max-width:768px) {
+    //tablet e mobile
+
+    input,
+    select {
+        line-height: 1.5;
+    }
+
+    form {
+        width: 90%;
+        padding: 2rem !important;
+    }
+
+    .row {
+        align-items: center;
+        justify-content: center;
+    }
+}
+
+@media(max-width:600px) {
+    section {
+        min-height: 100vh;
+        background-image: linear-gradient(to top, rgba(0, 0, 0, 1) 0%,
+                rgba(0, 0, 0, 0) 100%), linear-gradient(to bottom, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 0) 100%),
+            linear-gradient(to right, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 0) 100%),
+            url(../../../assets/img/1512217.jpg);
+
+        .form-container {
+            width: 100vw;
+
+            form {
+                background-color: transparent !important;
+                border: none !important;
+                border-radius: 25px;
+                width: 100%;
+
+                input,
+                input:focus,
+                select,
+                select:focus {
+                    background-color: $inputBc;
+                    width: 100%;
+                    height: 6vh;
+                }
+
+                button {
+                    height: 6vh;
+                    // width: 30vw;
+                }
+
+            }
+        }
+
+    }
+}

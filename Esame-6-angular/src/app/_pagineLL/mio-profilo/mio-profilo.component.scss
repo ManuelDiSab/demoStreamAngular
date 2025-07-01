@@ -1,0 +1,163 @@
+@import '../../../variabili';
+@import '../../../gestione';
+
+.titolo {
+    margin-top: 1em;
+    color: rgba(255, 255, 255, 0.8);
+    text-align: center;
+}
+
+form {
+    border: 0px !important
+}
+
+#small {
+    font-size: 0.6rem;
+}
+
+section {
+    .container-dati {
+        //Container con i dati utente
+        border: $borderBut;
+        width: 50vw;
+        background-color: #101415;
+        border-radius: 10px;
+        color: rgba(255, 255, 255, 0.8);
+        padding: 1em;
+        display: block;
+        margin: 30px auto;
+
+        .container-header {
+            //Header con titolo e button modifica
+            display: flex;
+            justify-content: space-between;
+            color: rgba(255, 255, 255, 0.8);
+
+            button {
+                color: rgba(255, 255, 255, 0.8);
+                background-color: transparent;
+            }
+        }
+
+        span {
+            color: rgb(158, 2, 158);
+        }
+    }
+}
+
+input:focus,
+select,
+select:focus {
+    background-color: $inputBc;
+    color: white;
+}
+
+.modal-body,
+.dz-modal {
+    border-radius: 5px;
+
+    form {
+        border-radius: 0%;
+        width: 100%;
+
+    }
+}
+
+@media(max-width:768px) {
+    section {
+        .container-dati {
+            //Container con i dati utente
+            border: $borderBut;
+            width: 70vw;
+            background-color: #101415;
+            border-radius: 10px;
+            color: rgba(255, 255, 255, 0.8);
+            padding: 1em;
+            display: block;
+            margin: 30px auto;
+
+            .container-header {
+                //Header con titolo e button modifica
+                display: flex;
+                justify-content: space-between;
+                color: rgba(255, 255, 255, 0.8);
+                h5{
+                    font-size: 1rem;
+                }
+                button {
+                    color: rgba(255, 255, 255, 0.8);
+                    background-color: transparent;
+                }
+            }
+
+            span {
+                color: rgb(158, 2, 158);
+            }
+        }
+    }
+
+    input:focus,
+    select,
+    select:focus {
+        background-color: $inputBc;
+        color: white;
+    }
+
+    .modal-body {
+        form {
+            border-radius: 0%;
+            width: 100%;
+
+        }
+    }
+}
+
+@media(max-width:425px) {
+    section {
+        .container-dati {
+            //Container con i dati utente
+            border: $borderBut;
+            width: 90vw;
+            background-color: #101415;
+            border-radius: 10px;
+            color: rgba(255, 255, 255, 0.8);
+            padding: 1em;
+            display: block;
+            margin: 30px auto;
+
+            .container-header {
+                //Header con titolo e button modifica
+                display: flex;
+                justify-content: space-between;
+                color: rgba(255, 255, 255, 0.8);
+
+                button {
+                    color: rgba(255, 255, 255, 0.8);
+                    background-color: transparent;
+                    .bi{
+                        display: none;
+                    }
+                }
+            }
+
+            span {
+                color: rgb(158, 2, 158);
+            }
+        }
+    }
+
+    input:focus,
+    select,
+    select:focus {
+        background-color: $inputBc;
+        color: white;
+    }
+
+    .modal-body {
+        form {
+            border-radius: 0%;
+            width: 100%;
+
+        }
+    }
+}

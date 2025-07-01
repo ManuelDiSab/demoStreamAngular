@@ -1,0 +1,43 @@
+<section class="container-fluid d-flex bg-image" id="principale" style="background-image: linear-gradient(to right, rgba(0, 0, 0, 1) 0%,
+            rgba(0, 0, 0, 0) 100%), linear-gradient(to top, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 0) 100%), 
+            url({{risorsa?.path}});">
+    <!-- Contenuto principale film e dettagli-->
+    <div class="row w-100 pt-lg-5 d-flex" id="riga">
+        <div class="col-lg-7  col-12 mt-5 align-content-end" id="sinistra">
+            <section class="text-white col-12"><!-- Titolo film e incipit trama-->
+                <h1 id="titolo">{{risorsa?.titolo}}</h1>
+                <p id="trama">{{risorsa?.trama}}</p>
+            </section>
+            <section class="text-white p-2"><!-- dettagli film-->
+                <ul class="list-inline">
+                    <li class="list-inline-item pe-1">{{risorsa?.voto}} <i class="bi bi-star-fill"
+                            style="color: yellow;"></i></li>
+                    <li class="list-inline-item pe-1">{{risorsa?.anno}} - {{risorsa?.anno_fine}} </li>
+                    <li class="list-inline-item pe-1"><a href="#"
+                            class="text-white-50 text-decoration-underline">{{risorsa?.genere}}</a></li>
+                    <li class="list-inline-item pe-1"><i class="bi bi-badge-hd"></i></li>
+                </ul>
+            </section>
+            <section class="btn-group p-md-2 d-flex"><!-- Bottoni grandi-->
+                <button class="" id="play" (click)="open(content);setVideo(episodi_arr[0].path_video)">Primo episodio<i
+                        class="bi bi-play-fill"></i></button>
+                <button (click)="preferiti(risorsa)" class="utility rounded-circle"><i
+                        [class.bi-bookmark-fill]="risorsa?.preferito" class="bi"
+                        [class.bi-bookmark]="!risorsa?.preferito"></i></button>
+                <button class="utility" data-toggle="tooltip" data-placement="top" title="Guarda il trailer">
+                    <i class="bi bi-film"></i>
+                </button>
+            </section>
+        </div>
+    </div>
+</section>
+<ng-template #content let-modal id="modal">
+    <video controls class="video" id="primo_ep" #video>
+    </video>
+    <div class="sopra">
+        <i class="bi bi-x-lg chiudi" (click)="modal.close()"></i>
+    </div>
+</ng-template>
+
+<nav-tab [elementi_serie]="arr_serie" [serie]="risorsa!" [FilmOSerie]="false" [episodi]="episodi_arr"
+    [n_stagioni]="n_stagioni"></nav-tab>

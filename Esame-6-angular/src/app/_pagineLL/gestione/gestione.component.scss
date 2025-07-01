@@ -1,0 +1,95 @@
+@import '../../../variabili';
+@import '../../../gestione';
+
+#contenuto {
+    //Section principale
+    min-height: 100vh;
+    background-image: url('.././../../assets/img/onde_p.jpg');
+    background-repeat: repeat-x;
+    object-fit: cover;
+    background-size: cover;
+
+    .titolo {
+        //Titolo della pagina
+        margin-top: 5vh;
+        text-align: center;
+        color: rgba(255, 255, 255, 0.8);
+
+    }
+
+    .scelta {
+        display: block;
+        width: 100%;
+        margin: 0;
+        padding: 0;
+        text-align: center;
+        // border: 1px solid #fff;
+        list-style: none;
+
+        .voci_scelta {
+            padding: 2vw;
+            border-radius: 40px;
+            // width: 100%;
+            margin: 10px 20px;
+            display: inline-block;
+            cursor: pointer;
+
+            a {
+                width: 100%;
+                text-decoration: none;
+                color: rgba(255, 255, 255, 0.8);
+                font-size: 22px;
+            }
+
+            &:hover {
+                background-color: rgba(43, 43, 43, 0.8) !important;
+            }
+        }
+
+        .active {
+            background-color: rgba(70, 68, 68, 0.7) !important;
+        }
+    }
+
+    .gestioni {
+        // border: #fff 1px solid;
+        margin-right: 0;
+
+        .container-fluid {
+            padding: 1%;
+
+            .numeri {
+                background-color: $NavColor;
+                color: rgba(255, 255, 255, 0.8);
+                font-size: 20px;
+                padding: 5vh;
+                width: fit-content;
+                border: $borderBut;
+                border-radius: 10px;
+            }
+        }
+    }
+}
+
+@media(max-width:653px) {
+    .bi {
+        display: none;
+    }
+}
+
+@media(max-width:516px) {
+    .bi {
+        display: block;
+    }
+
+    .dentro {
+        display: none;
+    }
+
+    .scelta {
+        .voci_scelta {
+            margin: 2vw 4vw !important;
+            padding: 2vw 4vw !important;
+        }
+    }
+}

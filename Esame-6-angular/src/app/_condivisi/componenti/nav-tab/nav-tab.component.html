@@ -1,0 +1,167 @@
+<!--   ##########   SE LA RISORSA E' UNA SERIE  ###################################-->
+<section class=" py-5" *ngIf="serie">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12" [ngStyle]="{overflow:'visible'}">
+                <ul class="nav tablist pb-4" id="myTab" role="tablist">
+                    <li class="nav-item " role="presentation" *ngIf="serie">
+                        <button class="nav-link active bottoni-clps" id="episodi-tab" data-bs-toggle="tab"
+                            data-bs-target="#episodi-tab-pane" type="button" role="tab" aria-controls="episodi-tab-pane"
+                            aria-selected="true" [class.bott-active]="attivo === 1" #episodi
+                            (click)="setActive(episodi)">Episodi</button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link bottoni-clps" id="content-tab" data-bs-toggle="tab"
+                            data-bs-target="#content-tab-pane" type="button" role="tab" aria-controls="content-tab-pane"
+                            aria-selected="true" [class.bott-active]="attivo === 2" #primo
+                            (click)="setActive(primo)">Correlati</button>
+                    </li>
+                    <li class="nav-item " role="presentation">
+                        <button class="nav-link bottoni-clps" id="details-tab" data-bs-toggle="tab"
+                            data-bs-target="#details-tab-pane" type="button" role="tab" aria-controls="details-tab-pane"
+                            aria-selected="true" [class.bott-active]="attivo === 3" #secondo
+                            (click)="setActive(secondo)">Dettagli</button>
+                    </li>
+
+                </ul>
+
+                <div class="tab-content overflow-visible" id="myTabContent">
+
+                    <div class="tab-pane fade show active " id="episodi-tab-pane" role="tabpanel"
+                        aria-labelledby="content-tab" tabindex="0">
+
+                    
+                        <select class="form-select" id="stagioni" (change)="select_stagioni($event)" >
+                            <option [value]="0">Tutte le stagioni</option>
+                            <option [value]="item" class="stagione" *ngFor="let item of n_stagioni">Stagione {{item}}</option>
+                        </select>
+
+                        
+
+                        <ul class="lista-episodi">
+                            <li *ngFor="let ep of episodi" class="ep_container">
+                                <input type="hidden" [value]="ep.stagione" class="hidden">
+                                <div class="video">
+                                    <img [src]="serie.path" class="img_ep bg-image">
+                                        <button type="button"  (click)="open(content);setVideo(ep.path_video)">
+                                            <i class="bi bi-play-fill"></i>
+                                        </button>
+                                    
+                                </div>
+                                <div class="contenuti">
+                                    <span class="num">S{{ep.stagione}} E{{ep.numero}} - {{ep.titolo}}</span>
+                                    <span class="durata">Durata: {{ep.durata}}</span>
+                                    <span class="voto"><i class="bi bi-star-fill"></i> {{ep.voto}}</span>
+                                    <p class="trama">{{ep.trama}}</p>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="tab-pane fade p-lg-2 p-2" id="content-tab-pane" role="tabpanel"
+                        aria-labelledby="content-tab" tabindex="0">
+                        <slider [elementi]="elementi_serie" [titolo]="'Altre serie per te'"></slider>
+
+                    </div>
+
+
+                    <div class="tab-pane fade pt-lg-5 text-white" id="details-tab-pane" role="tabpanel"
+                        aria-labelledby="details-tab" tabindex="0">
+                        <h4>Maggiori informazioni</h4>
+                        <div class="content pt-3" *ngIf="film">
+                            <p>Regista: <span>{{film.regista}}</span></p>
+                        </div>
+                        <div class="content pt-3" *ngIf="generi2">
+                            <h5 class="fs-6">Altri generi correlati</h5>
+                            <p *ngIf="generi2.includes(',')">
+                                <a href="javascript:void(0)" class="generi"
+                                    *ngFor="let item of generi2.split(','); index as i">
+                                    {{item }}
+                                </a>
+                            </p>
+                            <p *ngIf="!generi2.includes(',')">{{generi2}}</p>
+                        </div>
+
+                        <div class="content pt-3">
+                            <h5 class="fs-6">Audio Lingua</h5>
+                            <p>Italiano, English</p>
+                        </div>
+                        <div class="content pt-3">
+                            <h5 class="fs-6">Sottitoli</h5>
+                            <p>Italiano [CC],English [CC]</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<ng-template #content let-modal id="modal">
+    <video controls class="video_modal" #video id="video_ep">
+    </video>
+    <div class="sopra">
+        <i class="bi bi-x-lg chiudi" (click)="modal.close()"></i>
+    </div>
+</ng-template>  
+
+
+
+<!--   ##########   SE LA RISORSA E' UN FILM  ###################################-->
+<section class="py-5" *ngIf="film">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+                <ul class="nav tablist pb-4" id="myTab" role="tablist">
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link active bottoni-clps" id="content-tab" data-bs-toggle="tab"
+                            data-bs-target="#content-tab-pane" type="button" role="tab" aria-controls="content-tab-pane"
+                            aria-selected="true" [class.bott-active]="attivo === 1" #primo
+                            (click)="setActiveDue(primo)">Contenuti correlati</button>
+                    </li>
+                    <li class="nav-item " role="presentation">
+                        <button class="nav-link bottoni-clps" id="details-tab" data-bs-toggle="tab"
+                            data-bs-target="#details-tab-pane" type="button" role="tab" aria-controls="details-tab-pane"
+                            aria-selected="true" [class.bott-active]="attivo === 2" #secondo
+                            (click)="setActiveDue(secondo)">Dettagli</button>
+                    </li>
+
+                </ul>
+                <div class="tab-content overflow-visible" id="myTabContent">
+
+                    <div class="tab-pane fade show active p-lg-2 p-2" id="content-tab-pane" role="tabpanel"
+                        aria-labelledby="content-tab" tabindex="0">
+                        <slider [elementi]="elementi_film" [titolo]="'Altri film per te'"></slider>
+                    </div>
+
+
+                    <div class="tab-pane fade ps-5 text-white" id="details-tab-pane" role="tabpanel"
+                        aria-labelledby="details-tab" tabindex="0">
+                        <h4>Maggiori informazioni</h4>
+                        <div class="content pt-3" *ngIf="film">
+                            <p>Regista: <span>{{film.regista}}</span></p>
+                        </div>
+                        <div class="content pt-3" *ngIf="generi2">
+                            <h5 class="fs-6">Altri generi correlati</h5>
+                            <p *ngIf="generi2.includes(',')">
+                                <a href="javascript:void(0)" class="generi"
+                                    *ngFor="let item of generi2.split(','); index as i">
+                                    {{item }}
+                                </a>
+                            </p>
+                            <p *ngIf="!generi2.includes(',')">{{generi2}}</p>
+                        </div>
+
+                        <div class="content pt-3">
+                            <h5 class="fs-6">Audio Lingua</h5>
+                            <p>Italiano, English</p>
+                        </div>
+                        <div class="content pt-3">
+                            <h5 class="fs-6">Sottitoli</h5>
+                            <p>Italiano [CC],English [CC]</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
