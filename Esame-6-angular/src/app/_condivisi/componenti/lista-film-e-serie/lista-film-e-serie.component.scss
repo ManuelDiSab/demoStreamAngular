@@ -1,14 +1,14 @@
 .contenitore {
     display: flex;
     flex-wrap: wrap;
-
+    gap:1rem;
     .card {
+        flex: 0 0 calc(100% / 4 - 1rem);
+        /* per 4 colonne, con gap */
         z-index: 0;
-        margin-right: 10px;
         background-color: #000;
         cursor: pointer;
-        padding: 10px;
-        width: 20%;
+        width: 100%;
         text-decoration: none;
 
         img {
