@@ -4,7 +4,7 @@
     <div class="container-dati"><!-- ####  Pannello per la password-->
         <div class="container-header">
             <h5>Password</h5>
-            <button class="btn btn-outline-light" (click)="open(info);setNform(3)"><i class="bi bi-pencil-square"></i>
+            <button class="btn btn-outline-light" (click)="open(info);setNform(3)" [disabled]="true"><i class="bi bi-pencil-square"></i>
                 modifica</button>
         </div>
         <hr>
@@ -18,7 +18,7 @@
     <div class="container-dati"><!-- ####  Pannello con nome e cognome-->
         <div class="container-header">
             <h5>Nome e cognome</h5>
-            <button class="btn btn-outline-light" (click)="open(info);setNform(4);inserimentoDati(4)"><i
+            <button class="btn btn-outline-light" (click)="open(info);setNform(4);inserimentoDati(4)" [disabled]="true"><i
                     class="bi bi-pencil-square"></i> modifica</button>
         </div>
         <hr>
@@ -37,7 +37,7 @@
     <div class="container-dati"><!-- ####  Pannello dei recapiti #####-->
         <div class="container-header">
             <h5>Recapiti</h5>
-            <button class="btn btn-outline-light" (click)="open(info);setNform(5);inserimentoDati(5)"><i
+            <button class="btn btn-outline-light" (click)="open(info);setNform(5);inserimentoDati(5)" [disabled]="true"><i
                     class="bi bi-pencil-square"></i> modifica</button>
         </div>
         <hr>
@@ -52,7 +52,7 @@
     <div class="container-dati"><!-- ####  Pannello con informazioni anagrafiche-->
         <div class="container-header">
             <h5>Info personali</h5>
-            <button class="btn btn-outline-light" (click)="open(info);setNform(1);inserimentoDati(1)"><i
+            <button class="btn btn-outline-light" (click)="open(info);setNform(1);inserimentoDati(1)" [disabled]="true"><i
                     class="bi bi-pencil-square"></i> modifica</button>
         </div>
         <hr>
@@ -79,7 +79,7 @@
     <div class="container-dati"><!-- ####  Pannello con le informazioni riguardante gli indirizzi  -->
         <div class="container-header">
             <h5>Indirizzo</h5>
-            <button class="btn btn-outline-light" (click)="open(info);setNform(2);inserimentoDati(2)"><i
+            <button class="btn btn-outline-light" (click)="open(info);setNform(2);inserimentoDati(2)"[disabled]="true"><i
                     class="bi bi-pencil-square"></i> modifica</button>
         </div>
         <hr>
@@ -119,7 +119,7 @@
     <div class="container-dati danger-zone"><!-- ####  Pannello con le informazioni riguardante gli indirizzi  -->
         <div class="container-header header-dz">
             <h5>Azioni sull'account</h5>
-            <button class="btn btn-outline-danger text-danger" (click)="open(elimina);setNform(5);inserimentoDati(5)"><i
+            <button class="btn btn-outline-danger text-danger" (click)="open(elimina);setNform(5);inserimentoDati(5)" [disabled]="true"><i
                     class="bi bi-trash-fill text-danger"></i>
                 elimina</button>
         </div>
@@ -153,13 +153,13 @@
                             (form_info.get('data')?.dirty || form_info.get('data')?.touched)" />
                     <button class="btn  bi bi-calendar3 text-white border border-rounded" (click)="d.toggle()"
                         type="button" id="dateP" [class.is-invalid]="form_info.get('data')?.invalid &&
-                            (form_info.get('data')?.dirty || form_info.get('data')?.touched)" #comune></button>
+                            (form_info.get('data')?.dirty || form_info.get('data')?.touched)" [disabled]="true" #comune></button>
                 </div>
             </div>
 
             <div class="row g-2 mb-3 p-3 mx-1">
                 <div class="col"><!-- #####  Comune di nascita  ########-->
-                    <label for="comuneNascita" class="form-label"
+                    <label for="comuneNascita" class="form-label" 
                         [class.is-invalid]="form_ind.get('comuneNascita')?.invalid &&
                             (form_ind.get('comuneNascita')?.dirty || form_ind.get('comuneNascita')?.touched)">comuneNascita</label>
                     <!-- <input type="text" class="form-control" id="comuneNascita" formControlName="comuneNascita"> -->
@@ -194,7 +194,7 @@
                     ANNULLA
                 </button>
                 <button class="modifica conferma_butt" type="submit" (click)="modal.close()"
-                    [disabled]="!form_info.valid">
+                    [disabled]="true">
                     MODIFICA
                 </button>
             </div>
