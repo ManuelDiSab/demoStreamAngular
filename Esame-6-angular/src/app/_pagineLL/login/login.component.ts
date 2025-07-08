@@ -15,30 +15,33 @@ import { Auth } from 'src/app/interfaces/IAuth.interface';
 
 })
 export class LoginComponent implements OnInit, OnDestroy {
-    isAttivo:boolean = true
+    isAttivo: boolean = true
     isAutenticato: boolean = true
     reactiveForm: FormGroup
     auth: BehaviorSubject<Auth>
-    private distruggi$ = new Subject<void>()    
+    private distruggi$ = new Subject<void>()
 
     constructor(private fb: FormBuilder, private router: Router, private api: ApiService, private authService: AuthService) {
         this.reactiveForm = this.fb.group({
-            'utente': ['', [Validators.required, Validators.email, Validators.minLength(6), Validators.maxLength(100)]],//Validatori per il campo utente
-            'password': ['', [Validators.required, Validators.minLength(6), Validators.maxLength(30)]]//Validatori per il campo password
+            utente: ['guest@demo.it', [Validators.required, Validators.email, Validators.minLength(6), Validators.maxLength(100)]],//Validatori per il campo utente
+            password: ['Guest123!', [Validators.required, Validators.minLength(6), Validators.maxLength(30)]]//Validatori per il campo password
         })
+        this.reactiveForm.get('utente')?.disable()
+        this.reactiveForm.get('password')?.disable()
+        
 
         this.auth = this.authService.LeggiObsAuth()// Con questa comando posso sapere se siamo autorizzati o meno
         console.log('Auth:', this.auth)
     }
     ngOnInit(): void {
-        
-        
+
+
     }
     ngOnDestroy(): void {
         this.distruggi$.next()
     }
 
-        
+
     accedi(): void {
         console.log('ACCEDI 1')
         if (this.reactiveForm.invalid) {
@@ -76,26 +79,26 @@ export class LoginComponent implements OnInit, OnDestroy {
             next: (rit: I_rispostaserver) => {
                 console.log('ritorno osservo login:', rit)
                 if (rit.data !== null && rit.message !== null) {
-                        const token: string = rit.data.tk
-                        const contenutoTK = UtilityService.LeggiToken(token)
-                        if(contenutoTK.data.status != 1){
-                            this.isAttivo = false
-                            rit.message = 'Il tuo account non è attivo'
-                        }else{
-                            const Auth: Auth = {
-                                token: token,
-                                nome: contenutoTK.data.nome,
-                                idRuolo: contenutoTK.data.idRuolo,
-                                status: contenutoTK.data.status,
-                                nazione: contenutoTK.data.nazione,
-                                idUser: contenutoTK.data.idUser,
-                                sesso: contenutoTK.data.sesso
-                            }
-                            this.isAttivo = true
-                            this.authService.settaObsAuth(Auth)
-                            this.authService.scriviAuthSuLocalStorage(Auth)
-                            this.router.navigateByUrl('/homepage')//Reindirizzo sulla homepage 
+                    const token: string = rit.data.tk
+                    const contenutoTK = UtilityService.LeggiToken(token)
+                    if (contenutoTK.data.status != 1) {
+                        this.isAttivo = false
+                        rit.message = 'Il tuo account non è attivo'
+                    } else {
+                        const Auth: Auth = {
+                            token: token,
+                            nome: contenutoTK.data.nome,
+                            idRuolo: contenutoTK.data.idRuolo,
+                            status: contenutoTK.data.status,
+                            nazione: contenutoTK.data.nazione,
+                            idUser: contenutoTK.data.idUser,
+                            sesso: contenutoTK.data.sesso
                         }
+                        this.isAttivo = true
+                        this.authService.settaObsAuth(Auth)
+                        this.authService.scriviAuthSuLocalStorage(Auth)
+                        this.router.navigateByUrl('/homepage')//Reindirizzo sulla homepage 
+                    }
                 } else {
                     console.log('Errore in osservoLogin')
                 }
