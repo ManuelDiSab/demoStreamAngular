@@ -3,8 +3,8 @@
     flex-wrap: wrap;
     gap:1rem;
     .card {
-        flex: 0 0 calc(100% / 4 - 1rem);
-        /* per 4 colonne, con gap */
+        flex: 0 0 calc(100% / 5 - 1rem);
+        /* visualizzo 5 elementi per riga */
         z-index: 0;
         background-color: #000;
         cursor: pointer;
