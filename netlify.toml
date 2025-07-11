@@ -2,3 +2,7 @@
   base = "Esame-6-angular"
   command = "npm run build"
   publish = "dist/esame-6"
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
