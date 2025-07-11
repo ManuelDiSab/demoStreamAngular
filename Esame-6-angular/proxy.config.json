@@ -1,6 +1,6 @@
 {
     "/api":{
-        "target":"http://localhost/ESAME_N_6/esame-6-laravel/public/api",
+        "target":"https://www.manueldisabatino.it/api-stream/api",
         "secure":"false",
         "changeOrigin":"true",
         "pathRewrite":{

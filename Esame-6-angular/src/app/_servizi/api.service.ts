@@ -11,6 +11,7 @@ import { IRegistrazione } from '../interfaces/IRegistrazione.interface';
 import { IUser } from '../interfaces/IUser.interface';
 import { AuthService } from './auth.service';
 import { computeStyles } from '@popperjs/core';
+import { environment } from 'src/environments/environment.development';
 
 @Injectable({
     providedIn: 'root'
@@ -31,7 +32,7 @@ export class ApiService {
       * @returns string stringa che rappresenta endpoint del server
       */
     protected CalcolaRisorsa(risorsa: (string | number)[]): string {
-        const server: string = '/api'
+        const server: string = environment.apiUrl
         const versione: string = 'v1'
         let url = server + '/' + versione + '/'
         // risorsa.forEach(x => { url = url + x + '/' })
