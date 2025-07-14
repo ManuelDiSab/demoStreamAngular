@@ -17,6 +17,24 @@ export class AuthService {
     this.obsAuth$ = new BehaviorSubject<Auth>(AuthService.auth) // metto un oggetto vuoto all'interno dell'observable
   }
 
+      /**
+     * Funzione per effettuare un logout dalla piattaforma
+     * eliminando il contenuto del local storage e settando auth a null
+     * @returns void 
+     */
+    logout(): void {
+        this.eliminaAuthSuLocalStorage()
+        let Auth ={
+        idUser: null,
+        idRuolo: null,
+        status: null,
+        token: null,
+        nome: null,
+        nazione: null,
+        sesso: null
+      }
+      this.settaObsAuth(Auth)
+    }
 
   /**
    * 

@@ -204,14 +204,8 @@
          font-size: large;
          font-family: sans-serif;
 
-         &:hover {
-             transform: scale(1.1);
-             transition: .6s;
-         }
-
-         &:focus {
-             text-decoration: underline 2px rgb(166, 8, 166);
-             transform: scale(1.1);
+         &:hover, &:focus {
+         color: rgb(233, 6, 233);
          }
      }
 

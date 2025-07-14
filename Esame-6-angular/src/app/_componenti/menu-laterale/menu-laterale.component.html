@@ -85,12 +85,12 @@
             <div class="offcanvas-body">
                 <ul class="navbar-nav" id="ul_menu"><!--lista contenente le voci del menu-->
                     <li class="nav-item px-3" *ngFor="let item of arr_obj;">
-                        <a class="nav-link voci" href="javascript:void(0)" [routerLink]="item.route">
+                        <a class="nav-link voci" href="javascript:void(0)" data-bs-dismiss="offcanvas" [routerLink]="item.route">
                             <i [class]="item.icon"></i>
                             {{ item.label }}</a>
                     </li>
                     <li class="nav-item px-3" *ngIf="(auth | async)?.idRuolo === 2">
-                        <a class="nav-link voci" href="javascript:void(0)" [routerLink]="obj_admin.route">
+                        <a class="nav-link voci" href="javascript:void(0)" [routerLink]="obj_admin.route" data-bs-dismiss="offcanvas">
                             <i [class]="obj_admin.icon"></i>
                             {{ obj_admin.label }}</a>
                     </li>
@@ -110,7 +110,7 @@
                         <div id="risultati_ricerca"><!-- Contenitore per disporre i titoli che corrispondono alla ricerca-->
                             <ul id="contRicerca">   
                                 <li *ngFor="let item of arr_film"><!-- display dei titoli dei film -->
-                                    <a href="javascript:void(0)" class="prodotti"
+                                    <a href="javascript:void(0)" class="prodotti" 
                                         [routerLink]="'film/'+item.titolo">{{item.titolo}}</a>
                                 </li>
                                 <li *ngFor="let item of arr_serie"><!-- Display dei titoli delle serie -->
@@ -129,7 +129,7 @@
                 <div ngbDropdownMenu aria-labelledby="navbarDropdown3" class="dropdown-menu"><!-- Dropdown menu con voci del profilo e logout-->
                     <a href="javascript:void(0)" [routerLink]="['/mio-profilo']" class="dropdown-item" ngbDropdownItem
                         title="Vai al mio account">Il mio account</a>
-                    <a ngbDropdownItem href="javascript:void0()"  (click)="logout()">Logout</a>
+                    <a ngbDropdownItem href="javascript:void0()"  [routerLink]="'/login'"  (click)="logout()">Logout</a>
                 </div>
             </li><!-- Fine pulsante profilo-->
         </ul>
