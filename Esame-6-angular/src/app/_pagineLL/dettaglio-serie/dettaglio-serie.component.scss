@@ -34,7 +34,7 @@
 
 #play {
     width: 20vw;
-    height: 7vh;
+    height: 6vh !important;
     text-decoration: none;
     border-radius: 5px;
     background: purple;
@@ -43,19 +43,20 @@
     margin-right: 1rem;
     font-size: 1rem;
     font-weight: 500;
-    transition: .3s linear;
+    transition: .2s linear;
     cursor: pointer;
     z-index: 999;
 
     &:hover {
-        border: 2px solid #fff;
-        color: violet;
-        background: #000;
+        border: 1px solid #fff;
+        background: hsla(0,0%,100%,.2);
+        color: #fff;
     }
 }
 
 .utility {
-    width: 4rem;
+height: 6vh !important;
+width: 6vh !important;
     border-radius: 50%;
     background: purple;
     border: 2px solid purple;

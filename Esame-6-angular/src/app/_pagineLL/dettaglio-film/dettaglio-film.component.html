@@ -3,7 +3,7 @@
             url({{risorsa?.path}})">
     <div class="row w-100 pt-lg-5 d-flex" id="riga">
 
-        <div class="col-lg-7  col-12 mt-5 align-content-end ps-5" id="sinistra">
+        <div class="col-lg-7  col-12 mt-5 align-content-end " id="sinistra">
             <section class="text-white col-12">
                 <h1 id="titolo">{{risorsa?.titolo}}</h1>
                 <p id="trama">{{risorsa?.trama}}</p>
@@ -24,12 +24,12 @@
                 <button class="" id="play" (click)="open(content);setVideo()">Riproduci<i
                         class="bi bi-play-fill"></i></button>
                 <button class="utility" data-placement="top"
-                    title="Guarda il trailer">
+                    title="Guarda il trailer"><span class="ut-text">Trailer</span>
                     <i class="bi bi-film"></i>
                 </button>
                 <!-- <button *ngIf="risorsa?.preferito" (click)="TogliPreferito(risorsa,i1)" class="utility rounded-circle"><i
                         class="bi bi-bookmark-fill" #i1></i></button> -->
-                <button (click)="preferiti(risorsa)" class="utility rounded-circle"><i
+                <button (click)="preferiti(risorsa)" class="utility rounded-circle"><span class="ut-text">Preferiti</span><i
                         [class.bi-bookmark-fill]="risorsa?.preferito" class="bi" [class.bi-bookmark]="!risorsa?.preferito"></i></button>
             </section>
         </div>
