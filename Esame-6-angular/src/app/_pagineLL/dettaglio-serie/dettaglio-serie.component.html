@@ -21,11 +21,11 @@
             <section class="btn-group p-md-2 d-flex"><!-- Bottoni grandi-->
                 <button class="" id="play" (click)="open(content);setVideo(episodi_arr[0].path_video)">Primo episodio<i
                         class="bi bi-play-fill"></i></button>
-                <button (click)="preferiti(risorsa)" class="utility rounded-circle"><i
+                <button (click)="preferiti(risorsa)" class="utility rounded-circle"> <span class="ut-text">Preferiti</span><i
                         [class.bi-bookmark-fill]="risorsa?.preferito" class="bi"
                         [class.bi-bookmark]="!risorsa?.preferito"></i></button>
                 <button class="utility" data-toggle="tooltip" data-placement="top" title="Guarda il trailer">
-                    <i class="bi bi-film"></i>
+                    <span class="ut-text">Trailer</span><i class="bi bi-film"></i>
                 </button>
             </section>
         </div>

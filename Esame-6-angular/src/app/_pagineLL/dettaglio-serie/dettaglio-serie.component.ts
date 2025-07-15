@@ -1,7 +1,7 @@
 import { Component, inject, OnInit, TemplateRef } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ModalDismissReasons, NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { BehaviorSubject, Observable, Subscription } from 'rxjs';
+import { BehaviorSubject, Observable, of, Subscription } from 'rxjs';
 import { ApiService } from 'src/app/_servizi/api.service';
 import { AuthService } from 'src/app/_servizi/auth.service';
 import { OsservatoriService } from 'src/app/_servizi/osservatori.service';
@@ -43,6 +43,8 @@ export class DettaglioSerieComponent implements OnInit {
     ngOnInit(): void {
         this.route.paramMap.subscribe((params) => {//Mi sottoscrivo all'activated route cosicchè quando egli cambia, cambi anche la risorsa che voglio visualizzare
             this.id = params.get('id');
+            this.arr_serie = []
+            this.n_stagioni = []
             this.serie$.subscribe(this.osservatoreSerie())
             this.episodi_arr = []
             this.episodi$.subscribe(this.ossEpisodi())

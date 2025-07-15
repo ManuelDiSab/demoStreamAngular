@@ -13,12 +13,12 @@ import { UtilityService } from 'src/app/_servizi/utility.service';
     styleUrls: ['./slider.component.scss'],
 })
 
-export class SliderComponent implements OnInit, OnDestroy{
+export class SliderComponent implements OnInit, OnDestroy {
     @Input('elementi') film!: (IFilm | ISerie)[]
     @Input('titolo') titolo!: string
     @Input('icona') icona: string | null = null
     @Input('genere') genere: string | null = null
-    @Input('idGenere') idGenere: number | null = null    
+    @Input('idGenere') idGenere: number | null = null
     stato$: Subject<string> = new Subject()
     cancellato$: Observable<string>
     tMax: number = 1000
@@ -67,7 +67,7 @@ export class SliderComponent implements OnInit, OnDestroy{
     }
 
 
-    alMouseLeave(el: HTMLDivElement, img:HTMLImageElement) {
+    alMouseLeave(el: HTMLDivElement, img: HTMLImageElement) {
         console.log('esco dal bottone')
         this.stato$.next('Uscito')
         el.style.display = 'none'
@@ -75,21 +75,26 @@ export class SliderComponent implements OnInit, OnDestroy{
         img!.style.opacity = '1'
     }
 
-    alMOuseEnter(el: HTMLDivElement, img:HTMLImageElement) {
-        console.log('%c Sono entrato con il cursore', 'color:magenta; font-weight:bold;')
-        this.stato$.next('Entro con il mouse')
-        const n = 100
-        interval(n).pipe(
-            takeUntil(this.cancellato$),
-            tap(x => {
-                const v = x * n
-                if (x >= 20) {
-                    el.style.display = 'block'
-                    img!.style.position = 'absolute'
-                    img!.style.opacity = '0'
-                }
-            })
-        ).subscribe(rit => console.log(rit, 'rit'))
+    alMOuseEnter(el: HTMLDivElement, img: HTMLImageElement) {
+        if (window.innerWidth >= 1024) {
+            console.log('%c Sono entrato con il cursore', 'color:magenta; font-weight:bold;')
+            this.stato$.next('Entro con il mouse')
+            const n = 100
+            interval(n).pipe(
+                takeUntil(this.cancellato$),
+                tap(x => {
+                    const v = x * n
+                    if (x >= 20) {
+                        el.style.display = 'block'
+                        img!.style.position = 'absolute'
+                        img!.style.opacity = '0'
+                    }
+                })
+            ).subscribe(rit => console.log(rit, 'rit'))
+        }else{
+            console.log('suca')
+        }
+
     }
 
 
@@ -109,26 +114,26 @@ export class SliderComponent implements OnInit, OnDestroy{
     onLeave(el: HTMLVideoElement): void {
         el.pause()
     }
-    
+
     /**
      * Funzione per aggiungere od elimnare il film dai preferiti
      * @param item IFilm o ISerie (interface per i film / Interface per le serie tv )
      * @returns void
      */
     preferiti(item: (IFilm | ISerie)) {
-        if(item !== null){
-        switch(item?.preferito){
-            case true:
-                this.utility.TogliDaiPreferiti(item)
-                item.preferito = false
-                console.log('preferito')
-            break;
-             case false:
-                this.utility.AddPreferiti(item)
-                item.preferito = true
-                console.log(' non preferito')
+        if (item !== null) {
+            switch (item?.preferito) {
+                case true:
+                    this.utility.TogliDaiPreferiti(item)
+                    item.preferito = false
+                    console.log('preferito')
+                    break;
+                case false:
+                    this.utility.AddPreferiti(item)
+                    item.preferito = true
+                    console.log(' non preferito')
+            }
         }
-    }
     }
     getSeverity(status: string) {
         switch (status) {

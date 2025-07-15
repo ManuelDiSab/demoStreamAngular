@@ -81,7 +81,7 @@ export class NavTabComponent implements OnInit {
      * @param content 
      */ 
     open(content: TemplateRef<any>) {
-        this.modalService.open(content, { fullscreen: true }).result.then(
+        this.modalService.open(content, { fullscreen: true , centered:true}).result.then(
             (result: any) => {
                 this.closeResult = `Closed with: ${result}`;
             },
