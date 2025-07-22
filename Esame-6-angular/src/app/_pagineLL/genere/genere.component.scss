@@ -32,10 +32,12 @@ hr{
 
 @media (max-width:1024px) {
     .btns {
-        text-align: center;
+        display: flex;
+        align-items:  center;
+        justify-content: center;
             .button {
             border-radius: 50px;
-            width: 25vw;
+            flex: calc( 100% / 3 - 1rem);
         }
     }
 }

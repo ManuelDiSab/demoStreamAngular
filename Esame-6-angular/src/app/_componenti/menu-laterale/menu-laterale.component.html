@@ -22,12 +22,12 @@
                 <div id="risultati_ricerca">
                     <ul id="contRicerca">
                         <li *ngFor="let item of arr_film">
-                            <a href="javascript:void(0)" class="prodotti"
-                                [routerLink]="'film/'+item.titolo">{{item.titolo}}</a>
+                            <a href="javascript:void(0)" class="prodotti" (click)="modal.close()"
+                                [routerLink]="'film/'+item.titolo"><span class="risultato">{{item.titolo}}</span></a>
                         </li>
                         <li *ngFor="let item of arr_serie">
-                            <a href="javascript:void(0)" class="prodotti"
-                                [routerLink]="'serie/'+item.idSerie">{{item.titolo}}</a>
+                            <a href="javascript:void(0)" class="prodotti" (click)="modal.close()"
+                                [routerLink]="'serie/'+item.idSerie"><span class="risultato">{{item.titolo}}</span></a>
                         </li>
                     </ul>
                 </div>

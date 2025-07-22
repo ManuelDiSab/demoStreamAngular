@@ -61,7 +61,8 @@ export class SliderComponent implements OnInit, OnDestroy {
             {
                 breakpoint: '767px',
                 numVisible: 2,
-                numScroll: 2
+                numScroll: 2,
+                
             }
         ];
     }

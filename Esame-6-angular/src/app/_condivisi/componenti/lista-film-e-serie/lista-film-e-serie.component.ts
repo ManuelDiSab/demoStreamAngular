@@ -46,7 +46,6 @@ export class ListaFilmESerieComponent implements OnInit {
         let width = window.innerWidth
         let img = document.getElementById(movie.titolo)
         if (width >= 1025) {
-            console.log('%c Sono entrato con il cursore', 'color:magenta; font-weight:bold;')
             this.stato$.next('Entro con il mouse')
             const n = 100
             interval(n).pipe(

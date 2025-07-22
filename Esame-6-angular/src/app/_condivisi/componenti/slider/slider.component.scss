@@ -35,7 +35,7 @@
         z-index: -1 !important;
         position: relative !important;
 
-        .schermo-piccolo{
+        .schermo-piccolo {
             display: none;
         }
 
@@ -45,12 +45,14 @@
             cursor: pointer;
             padding: 5px;
             text-decoration: none;
+
             img {
                 border-radius: 5px;
             }
 
             &:hover {
                 z-index: 1;
+
                 .info {
                     z-index: 999999;
                     border-radius: 5px;
@@ -73,7 +75,8 @@
                     justify-content: center;
                     display: flex;
 
-                    button,a {
+                    button,
+                    a {
                         padding: 6px 12px;
                         border-radius: 5px;
                         background: purple;
@@ -91,7 +94,7 @@
                         }
 
                         &:hover {
-                            border: 2px solid #fff;
+                            border: 2px solid violet;
                             color: violet;
                             background: #000;
                         }
@@ -139,13 +142,16 @@
         height: auto;
 
         .cards {
-            .schermo-piccolo{
+            .schermo-piccolo {
                 display: block;
             }
-            .schermo-grande{
+
+            .schermo-grande {
                 display: none;
             }
+
             .card {
+                margin-right: 0px;
 
                 &:hover {
                     img {

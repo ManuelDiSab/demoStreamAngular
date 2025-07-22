@@ -1,7 +1,7 @@
 import { Component, inject, OnInit, TemplateRef } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ModalDismissReasons, NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { BehaviorSubject, Observable, of, Subscription } from 'rxjs';
+import { BehaviorSubject, map, Observable, of, Subscription, tap } from 'rxjs';
 import { ApiService } from 'src/app/_servizi/api.service';
 import { AuthService } from 'src/app/_servizi/auth.service';
 import { OsservatoriService } from 'src/app/_servizi/osservatori.service';
@@ -22,7 +22,7 @@ export class DettaglioSerieComponent implements OnInit {
     private modalService = inject(NgbModal);
     auth: BehaviorSubject<Auth>
     serie$!: Observable<I_rispostaserver>
-    gruppo_serie$!: Observable<I_rispostaserver>
+    gruppo_serie$!: Observable<ISerie[]>
     episodi$!: Observable<I_rispostaserver>
     episodi_arr: IEpisodio[] = []
     arr_serie: ISerie[] = []
@@ -34,11 +34,17 @@ export class DettaglioSerieComponent implements OnInit {
     constructor(private router: Router, private authService: AuthService, private route: ActivatedRoute, private api: ApiService, private utility: UtilityService, private oss: OsservatoriService) {
         this.auth = this.authService.LeggiObsAuth()//Leggo l'auth da localstorage se esiste (sono loggato)
         this.route.paramMap.subscribe((params) => {
+            
             this.id = params.get('id');
             this.serie$ = this.api.getSeriePerId(this.id!)
             this.episodi$ = this.api.getEpisodiSerie(this.id!)
-            this.gruppo_serie$ = this.api.getSerieTvTotali()
+            this.gruppo_serie$ = this.api.getSerieTvTotali().pipe(
+                // Filtro le serie con id diverso dalla serie visualizzata nel dettaglio 
+                // e passo il contenuto tra le serie suggerite
+                map((rit:I_rispostaserver) => rit.data.filter((s:ISerie) => s.idSerie.toString() !== this.id))
+            )
         })
+        
     }
     ngOnInit(): void {
         this.route.paramMap.subscribe((params) => {//Mi sottoscrivo all'activated route cosicchè quando egli cambia, cambi anche la risorsa che voglio visualizzare
@@ -48,7 +54,9 @@ export class DettaglioSerieComponent implements OnInit {
             this.serie$.subscribe(this.osservatoreSerie())
             this.episodi_arr = []
             this.episodi$.subscribe(this.ossEpisodi())
-            this.gruppo_serie$.subscribe(this.oss.osservatore_serie(this.arr_serie))
+            this.gruppo_serie$.subscribe( rit =>{
+                this.arr_serie = rit }
+            )
         })
         if (this.auth.value.token == null || this.auth.value.token == '') {
             this.router.navigateByUrl('/login')

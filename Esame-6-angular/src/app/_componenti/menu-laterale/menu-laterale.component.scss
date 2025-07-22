@@ -40,10 +40,12 @@
              list-style: none;
              background-color: #101415;
              padding: 0;
+             border-radius: 5px;
 
              li {
                  width: 100%;
-                 padding: 1em;
+                 height: 3rem;
+                 ;
 
                  &:hover {
                      background-color: #171b1c;
@@ -52,6 +54,13 @@
                  .prodotti {
                      text-decoration: none !important;
                      color: rgba(255, 255, 255, 0.8) !important;
+                     display: block;
+                     height: 100%;
+
+                     .risultato {
+                         display: block;
+                         padding: 1rem;
+                     }
                  }
              }
 
@@ -115,7 +124,7 @@
          }
 
          .sidenav-nav-item {
-            margin: 1vh;
+             margin: 1vh;
              width: 100%;
              margin-bottom: 0.625rem;
 
@@ -204,8 +213,9 @@
          font-size: large;
          font-family: sans-serif;
 
-         &:hover, &:focus {
-         color: rgb(233, 6, 233);
+         &:hover,
+         &:focus {
+             color: rgb(233, 6, 233);
          }
      }
 
@@ -247,9 +257,10 @@
                      margin-right: 4vw;
                  }
 
-                 #profilo{
-                    margin-right: 2vw;
+                 #profilo {
+                     margin-right: 2vw;
                  }
+
                  a {
                      font-size: 5vw;
                  }

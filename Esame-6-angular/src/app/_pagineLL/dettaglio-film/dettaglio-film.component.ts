@@ -1,7 +1,7 @@
-import { Component, ElementRef, inject, OnDestroy, OnInit, TemplateRef, ViewChild, } from '@angular/core';
+import { Component, inject, OnInit, TemplateRef, ViewChild, } from '@angular/core';
 import { ActivatedRoute, NavigationEnd, NavigationStart, ParamMap, Params, Router } from '@angular/router';
 import { ModalDismissReasons, NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { BehaviorSubject, Observable, Subscription, tap } from 'rxjs';
+import { BehaviorSubject, map, Observable, Subscription, tap } from 'rxjs';
 import { ApiService } from 'src/app/_servizi/api.service';
 import { AuthService } from 'src/app/_servizi/auth.service';
 import { OsservatoriService } from 'src/app/_servizi/osservatori.service';
@@ -9,7 +9,6 @@ import { UtilityService } from 'src/app/_servizi/utility.service';
 import { Auth } from 'src/app/interfaces/IAuth.interface';
 import { IFilm } from 'src/app/interfaces/IFilm.interface';
 import { I_rispostaserver } from 'src/app/interfaces/IRirspostaServer.interface';
-import { ISerie } from 'src/app/interfaces/ISerie.interface';
 
 @Component({
     selector: 'app-dettaglio-film',
@@ -19,7 +18,7 @@ import { ISerie } from 'src/app/interfaces/ISerie.interface';
 export class DettaglioFilmComponent implements OnInit {
     auth: BehaviorSubject<Auth>
     film$!: Observable<I_rispostaserver>
-    gruppo_film$!: Observable<I_rispostaserver>
+    gruppo_film$!: Observable<IFilm[]>
     arr_film: IFilm[] = []
     risorsa: IFilm | null = null
     id: string | null = ''
@@ -29,24 +28,36 @@ export class DettaglioFilmComponent implements OnInit {
     private modalService = inject(NgbModal);
 
     constructor(private router: Router, private authService: AuthService, private route: ActivatedRoute, private api: ApiService,
-         private oss: OsservatoriService, private utility:UtilityService) {
+        private oss: OsservatoriService, private utility: UtilityService) {
         this.auth = this.authService.LeggiObsAuth()//Leggo l'auth da localstorage se esiste (sono loggato)
-        this.route.paramMap.subscribe((params) => {//Mi sottoscrivo all'activated route cosicchè quando egli cambia, cambi anche la risorsa che voglio visualizzare
-            this.id = params.get('id');
-            this.film$ = this.api.getFilmPerNome(this.id!)
-            this.gruppo_film$ = this.api.getFilmTotali()
-            this.gruppo_film$.subscribe(this.oss.osservatoreFilm(this.arr_film))
-            this.film$.subscribe(this.osservatoreFilm())
-        });
+        // this.route.paramMap.subscribe((params) => {//Mi sottoscrivo all'activated route cosicchè quando egli cambia, cambi anche la risorsa che voglio visualizzare
+        //     this.id = params.get('id');
+        //     this.film$ = this.api.getFilmPerNome(this.id!)
+        //     this.gruppo_film$ = this.api.getFilmTotali()
+        //         .pipe(
+        //             map((rit: I_rispostaserver) =>
+        //                 // Filtro i film usando i titoli, e tolgo il film visualizzato nel dettaglio dall'elennco dei film consigliati 
+        //                 rit.data.filter((film: IFilm) => film.idFilm !== this.risorsa?.idFilm)
+        //             )
+        //         )
+        // });
     }
 
     ngOnInit(): void {
         this.route.paramMap.subscribe((params) => {//Mi sottoscrivo all'activated route cosicchè quando egli cambia, cambi anche la risorsa che voglio visualizzare
-            this.id = params.get('id');
+            this.id = params.get('id');// L'id dei film è il titolo
             this.film$ = this.api.getFilmPerNome(this.id!)
-            this.gruppo_film$ = this.api.getFilmTotali()
-            this.gruppo_film$.subscribe(this.oss.osservatoreFilm(this.arr_film))
             this.film$.subscribe(this.osservatoreFilm())
+
+            this.gruppo_film$ = this.api.getFilmTotali()
+                .pipe(
+                    map((rit: I_rispostaserver) =>
+                        // Filtro i film usando i titoli, e tolgo il film visualizzato nel dettaglio dall'elennco dei film consigliati 
+                        rit.data.filter((film: IFilm) => film.idFilm !== this.risorsa?.idFilm)
+                    )
+                )
+            this.gruppo_film$.subscribe(rit => { this.arr_film = rit })
+
         });
         this.auth = this.authService.LeggiObsAuth()//Leggo l'auth da localstorage se esiste (sono loggato)
         if (this.auth.value.token == null || this.auth.value.token == '') {
@@ -60,19 +71,19 @@ export class DettaglioFilmComponent implements OnInit {
      * @returns void
      */
     preferiti(item: (IFilm | null)) {
-        if(item !== null){
-        switch(item?.preferito){
-            case true:
-                this.utility.TogliDaiPreferiti(item)
-                item.preferito = false
-                console.log('preferito')
-            break;
-             case false:
-                this.utility.AddPreferiti(item)
-                item.preferito = true
-                console.log(' non preferito')
+        if (item !== null) {
+            switch (item?.preferito) {
+                case true:
+                    this.utility.TogliDaiPreferiti(item)
+                    item.preferito = false
+                    console.log('preferito')
+                    break;
+                case false:
+                    this.utility.AddPreferiti(item)
+                    item.preferito = true
+                    console.log(' non preferito')
+            }
         }
-    }
     }
 
     private osservatoreFilm() {
@@ -93,7 +104,7 @@ export class DettaglioFilmComponent implements OnInit {
                         durata: elem[i].durata,
                         regista: elem[i].regista,
                         path: elem[i].path,
-                        video:elem[i].path_video,
+                        video: elem[i].path_video,
                         voto: elem[i].voto,
                         film: true,
                         preferito: elem[i].preferito

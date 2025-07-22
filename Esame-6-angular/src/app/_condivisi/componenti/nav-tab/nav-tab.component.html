@@ -42,7 +42,7 @@
                             <li *ngFor="let ep of episodi" class="ep_container">
                                 <input type="hidden" [value]="ep.stagione" class="hidden">
                                 <div class="video">
-                                    <img [src]="serie.path" class="img_ep bg-image">
+                                    <img [src]="serie.path" class="img_ep">
                                         <button type="button"  (click)="open(content);setVideo(ep.path_video)">
                                             <i class="bi bi-play-fill"></i>
                                         </button>
@@ -134,7 +134,7 @@
                     </div>
 
 
-                    <div class="tab-pane fade ps-5 text-white" id="details-tab-pane" role="tabpanel"
+                    <div class="tab-pane fade text-white" id="details-tab-pane" role="tabpanel"
                         aria-labelledby="details-tab" tabindex="0">
                         <h4>Maggiori informazioni</h4>
                         <div class="content pt-3" *ngIf="film">

@@ -3,11 +3,12 @@
 <div class="content-section implementation carousel-demo" style="z-index:0 !important">
     <div class="cards">
         <p-carousel [value]="film" [numVisible]="5" [numScroll]="5" [circular]="false" [autoplayInterval]="100000000000"
-            [responsiveOptions]="responsiveOptions" [showIndicators]="false"
+            [responsiveOptions]="responsiveOptions" [showIndicators]="false" 
             class="caroseel"><!-- Autoplay on numero alto e "circular=false" altrimenti da problemi-->
             <ng-template let-movie pTemplate="item">
+                <!-- ##########    SCHERMI GRANDI  #############################-->
                 <!-- In caso la risorsa passata sia un film  -->
-                <div *ngIf="movie.idFilm" class="item card schermo-grande" (mouseenter)="alMOuseEnter(info, img)"
+                <div *ngIf="movie.film" class="item card schermo-grande" (mouseenter)="alMOuseEnter(info, img)"
                     (mouseleave)="alMouseLeave(info, img)">
                     <!-- (mouseenter)="onOverCard(carta,movie)" (mouseleave)="onLeaveResetCard()"> -->
                     <a href="javascript:void(0)" [routerLink]="'/film/'+movie.titolo">
@@ -72,7 +73,10 @@
                     </div>
                 </div>
 
-                <a *ngIf="movie.idFilm" class="item card schermo-piccolo" href="javascript:void(0)"
+
+                <!-- ##########    SCHERMI PICCOLI  #############################-->
+
+                <a *ngIf="movie.film" class="item card schermo-piccolo" href="javascript:void(0)"
                     [routerLink]="'/film/'+ movie.titolo" (mouseenter)="alMOuseEnter(info, img)"
                     (mouseleave)="alMouseLeave(info, img)">
                     <!-- (mouseenter)="onOverCard(carta,movie)" (mouseleave)="onLeaveResetCard()"> -->
